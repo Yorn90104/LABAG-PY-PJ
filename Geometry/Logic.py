@@ -1,25 +1,18 @@
 from random import randint
 from Geometry.Var import ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed ,times , same1 , same2 ,same3 , L_PIC , M_PIC , R_PIC , text_ADD , text_Score , text_Times
-from Geometry.UI import  init_game , Local 
+from Geometry.UI import  init , Local , Result_TXT 
 
-def Display(canvas_Game):
-    """顯示結果"""
-    global score, add, ed, times, text_Score, text_ADD, text_Times
 
-    canvas_Game.itemconfig(text_ADD , text = f"+{add}" )
-    canvas_Game.itemconfig(text_Score , text = f"目前分數：{score}" )
-    canvas_Game.itemconfig(text_Times , text = f"剩餘次數：{times - ed}" )
-
-def result(canvas_Game):
+def result(CANVA):
       """計算和顯示結果"""
-      global score, add, ed, p1, p2, p3
+      global score, add, ed, p1, p2, p3 , text_ADD, text_Score, text_Times
       ed += 1
       score += add
       print(f"第{ed}次")
       print(f' | {p1} | {p2} | {p3} |')
       print(f"+{add}")
       print(f"目前分數：{score}")
-      Display(canvas_Game)
+      Result_TXT(CANVA , score , add , ed , times , text_Score , text_ADD , text_Times)
       add = 0
 
 def ChangeA(x, y):
@@ -101,11 +94,12 @@ def calculate_score(p1 , p2 , p3 , a):
       return a
 
 def Begin(win ,canvas_Game) :
-      global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed , times ,  L_PIC , M_PIC , R_PIC
+      global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed , times ,  L_PIC , M_PIC , R_PIC ,text_ADD , text_Score , text_Times
 
       print(u"按鈕被點擊了！")
       
-      init_game(canvas_Game)
+      init(canvas_Game)
+      
 
       if ed  < times :
 
@@ -118,9 +112,9 @@ def Begin(win ,canvas_Game) :
             p3 = ChangeA(p3,ram3)
 
             #每隔0.5秒改圖片
-            win.after(500 , lambda : Local(canvas_Game , L_PIC , p1))
-            win.after(1000 , lambda : Local(canvas_Game , M_PIC , p2))
-            win.after(1500 , lambda : Local(canvas_Game , R_PIC , p3))
+            win.after(500 , lambda : Local(canvas_Game , L_PIC , p1 , 0 , 250))
+            win.after(1000 , lambda : Local(canvas_Game , M_PIC , p2 , 150 , 250))
+            win.after(1500 , lambda : Local(canvas_Game , R_PIC , p3 , 300 , 250))
 
             #增加分數
             add = calculate_score(p1 , p2 , p3 , add)

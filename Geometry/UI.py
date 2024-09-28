@@ -1,5 +1,5 @@
 import tkinter as tk
-from Geometry.Var import BG , QST ,L_PIC , M_PIC , R_PIC , BeginPIC , picture
+from Geometry.Var import BG , QST ,L_PIC , M_PIC , R_PIC , BeginPIC , picture , text_ADD
 from Geometry.Sound import Ding
 
 def setup_game_frame(win):
@@ -20,16 +20,21 @@ def setup_end_frame(win):
 
 def Load_PIC(CANVA, pc, x, y):
     """加載新的圖片並放在CANVA上 (畫面 , 照片, 水平座標, 垂直座標)"""
-    CANVA.create_image(x, y, image = pc, anchor = "nw")
+    pic = CANVA.create_image(x, y, image = pc, anchor = "nw")
+    return pic
 
-def Update_PIC(CANVA , n ,  pc) :
-    """更新CANVA上的圖片 (畫面, 位置, 圖)"""
-    CANVA.itemconfig(n , image = pc)
+def Update_PIC(CANVA , n ,  pc , x , y) :
+    """更新CANVA上的圖片 (畫面, 名字, 圖 , 水平座標, 垂直座標)"""
+    # CANVA.itemconfig(n , image = pc)
+    CANVA.delete(n)  # 刪除舊圖片
+    n = Load_PIC(CANVA , pc, x, y)  # 加載新圖片
 
-def init_game(CANVA):
-    Update_PIC(CANVA ,L_PIC, QST)
-    Update_PIC(CANVA ,M_PIC, QST)
-    Update_PIC(CANVA ,R_PIC, QST)
+def init(CANVA):
+    Update_PIC(CANVA , L_PIC , QST , 0 , 250)
+    Update_PIC(CANVA , M_PIC , QST , 150 , 250)
+    Update_PIC(CANVA , R_PIC , QST , 300 , 250)
+
+    CANVA.itemconfig(text_ADD, text=f"")
 
 def PIC(p):
     """根據歸屬選擇圖 (歸屬)"""
@@ -46,13 +51,11 @@ def PIC(p):
     elif p == "F":
         return picture[5]
 
-def Local(CANVA , L, p):
+def Local(CANVA , L, p , x ,  y):
     """哪個位置變圖 (畫面, 位置, 歸屬)"""
     new_pic = PIC(p)
-    if new_pic is not None:  # 確保圖片不為 None
-        Update_PIC(CANVA, L, new_pic)
-    else:
-        print("圖片加載失敗")
+    Update_PIC(CANVA, L, new_pic , x , y)
+    Ding()
 
 def Button(win , CMD , CANVA,  x , y):
     """添加按鈕(視窗,執行動作,畫面,水平位置,垂直位置)"""
@@ -62,5 +65,15 @@ def Button(win , CMD , CANVA,  x , y):
 
 def Text(CANVA , x , y , txt , size , color):
     """添加粗體文字(畫面,水平位置,垂直位置,大小,顏色)"""
-    CANVA.create_text(x, y, text = txt , font = ("Arial", size , "bold") , fill = color)
+    txt = CANVA.create_text(x, y, text = txt , font = ("Arial", size , "bold") , fill = color)
+    return txt
+
+def Result_TXT(CANVA , score, add, ed, times, text_ADD, text_Score, text_Times):
+    """顯示結果"""
+    CANVA.delete(text_ADD)
+    CANVA.delete(text_Score)
+    CANVA.delete(text_Times)
+    text_ADD = Text(CANVA , 225 , 475 , f"+{add}" , 16 , "yellow")
+    text_Score = Text(CANVA , 225 , 500 , f"目前分數：{score}" , 16 , "white")
+    text_Times = Text(CANVA , 225 , 525 , f"剩餘次數：{times - ed}" , 16 , "white")
 
