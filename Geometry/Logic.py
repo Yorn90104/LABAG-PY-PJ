@@ -94,7 +94,7 @@ def calculate_score(p1 , p2 , p3 , a):
       return a
 
 def Begin(win ,canvas_Game) :
-      global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed , times ,  L_PIC , M_PIC , R_PIC ,text_ADD , text_Score , text_Times
+      global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed , times ,  L_PIC , M_PIC , R_PIC
 
       print(u"按鈕被點擊了！")
       
