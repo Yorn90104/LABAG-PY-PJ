@@ -1,6 +1,6 @@
 from random import randint
-from Geometry.Var import ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed ,times , same1 , same2 ,same3 , L_PIC , M_PIC , R_PIC , text_ADD , text_Score , text_Times
-from Geometry.UI import  init , Local , Result_TXT 
+from LabaModule.Var import ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed ,times , same1 , same2 ,same3 , L_PIC , M_PIC , R_PIC , text_ADD , text_Score , text_Times
+from LabaModule.UI import  init , Local , Result_TXT 
 
 
 def result(CANVA):

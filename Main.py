@@ -14,8 +14,8 @@ win.iconbitmap('.\\Asset\\Superhhh.ico')
 win.geometry("450x800")
 win.resizable(False, False)
 
-from Geometry.UI import setup_game_frame , setup_end_frame , Load_PIC , Button , Text
-from Geometry.Var import score , times , ed , Title , QST , L_PIC , M_PIC , R_PIC , text_ADD , text_Score , text_Times
+from LabaModule.UI import setup_game_frame , setup_end_frame , Load_PIC , Button , Text
+from LabaModule.Var import score , times , ed , Title , QST , L_PIC , M_PIC , R_PIC , text_ADD , text_Score , text_Times
 
 frame_Game, canvas_Game = setup_game_frame(win)
 frame_End, canvas_End =setup_end_frame(win)
@@ -27,7 +27,7 @@ L_PIC = Load_PIC(canvas_Game , QST, 0, 250)
 M_PIC = Load_PIC(canvas_Game , QST, 150, 250)
 R_PIC = Load_PIC(canvas_Game , QST, 300, 250)
 
-from Geometry.Logic import Begin
+from LabaModule.Logic import Begin
 button_Begin = Button(win , lambda :Begin(win , canvas_Game) , canvas_Game , 225 , 575)
 # 綁定 Enter 鍵啟動遊戲
 win.bind('<Return>', lambda event :Begin(win , canvas_Game))

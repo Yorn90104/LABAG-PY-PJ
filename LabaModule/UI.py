@@ -1,6 +1,6 @@
 import tkinter as tk
-from Geometry.Var import BG , QST ,L_PIC , M_PIC , R_PIC , BeginPIC , picture , text_ADD
-from Geometry.Sound import Ding
+from LabaModule.Var import BG , QST ,L_PIC , M_PIC , R_PIC , BeginPIC , picture , text_ADD
+from LabaModule.Sound import Ding
 
 def setup_game_frame(win):
     """設置遊戲畫面"""
