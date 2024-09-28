@@ -1,18 +1,18 @@
 from random import randint
-from LabaModule.Var import ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed ,times , same1 , same2 ,same3 , L_PIC , M_PIC , R_PIC , text_ADD , text_Score , text_Times
+from LabaModule.Var import ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed ,times , same1 , same2 ,same3 , L_PIC , M_PIC , R_PIC
 from LabaModule.UI import  init , Local , Result_TXT 
 
 
 def result(CANVA):
       """計算和顯示結果"""
-      global score, add, ed, p1, p2, p3 , text_ADD, text_Score, text_Times
+      global score, add, ed, p1, p2, p3 
       ed += 1
       score += add
       print(f"第{ed}次")
       print(f' | {p1} | {p2} | {p3} |')
       print(f"+{add}")
       print(f"目前分數：{score}")
-      Result_TXT(CANVA , score , add , ed , times , text_Score , text_ADD , text_Times)
+      Result_TXT(CANVA , score , add , ed , times , "Add" , "Score" , "Times" )
       add = 0
 
 def ChangeA( y):
@@ -112,9 +112,9 @@ def Begin(win ,canvas_Game) :
             p3 = ChangeA(ram3)
 
             #每隔0.5秒改圖片
-            win.after(500 , lambda : Local(canvas_Game , L_PIC , p1 , 0 , 250))
-            win.after(1000 , lambda : Local(canvas_Game , M_PIC , p2 , 150 , 250))
-            win.after(1500 , lambda : Local(canvas_Game , R_PIC , p3 , 300 , 250))
+            win.after(500 , lambda : Local(canvas_Game , "LP" , p1))
+            win.after(1000 , lambda : Local(canvas_Game , "MP" , p2))
+            win.after(1500 , lambda : Local(canvas_Game , "RP" , p3))
 
             #增加分數
             add = calculate_score(p1 , p2 , p3 , add)
