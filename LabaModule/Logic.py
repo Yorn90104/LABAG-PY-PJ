@@ -1,6 +1,6 @@
 from random import randint
 from LabaModule.Var import ram1, ram2, ram3, p1, p2, p3, score, add, ed, times, same1, same2, same3, L_pic, M_pic, R_pic
-from LabaModule.UI import  init , Local , Result_TXT , Unable
+from LabaModule.UI import  init , Local , Result_TXT 
 
 
 def result(CANVA):
