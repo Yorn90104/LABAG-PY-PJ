@@ -70,6 +70,9 @@ def Text(CANVA , x , y , txt , size , color):
 
 def Result_TXT(CANVA , score, add, ed, times, text_ADD, text_Score, text_Times):
     """顯示結果"""
+    # CANVA.itemconfig(text_ADD, text=f"")
+    # CANVA.itemconfig(text_Score, text=f"目前分數：{score}")
+    # CANVA.itemconfig(text_Times, text=f"剩餘次數：{times - ed}")
     CANVA.delete(text_ADD)
     CANVA.delete(text_Score)
     CANVA.delete(text_Times)
