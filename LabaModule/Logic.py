@@ -1,6 +1,6 @@
 from random import randint
-from LabaModule.Var import ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed ,times , same1 , same2 ,same3 , L_PIC , M_PIC , R_PIC
-from LabaModule.UI import  init , Local , Result_TXT 
+from LabaModule.Var import ram1, ram2, ram3, p1, p2, p3, score, add, ed, times, same1, same2, same3, L_pic, M_pic, R_pic
+from LabaModule.UI import  init , Local , Result_TXT , Unable
 
 
 def result(CANVA):
@@ -93,11 +93,10 @@ def calculate_score(p1 , p2 , p3 , a):
             a = round( a / 3 )
       return a
 
-def Begin(win ,canvas_Game) :
-      global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed , times ,  L_PIC , M_PIC , R_PIC
+def Begin(win ,canvas_Game ,  button_Begin) :
+      global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed , times ,  L_pic , M_pic , R_pic
 
       print(u"按鈕被點擊了！")
-      
       init(canvas_Game)
       
 

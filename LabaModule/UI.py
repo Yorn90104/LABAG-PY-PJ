@@ -1,5 +1,5 @@
 import tkinter as tk
-from LabaModule.Var import BG , QST ,L_PIC , M_PIC , R_PIC , BeginPIC , picture , text_ADD
+from LabaModule.Var import BG , QST , BeginPIC , picture 
 from LabaModule.Sound import Ding
 
 def setup_frame(win):
@@ -65,5 +65,4 @@ def Result_TXT(CANVA , score, add, ed, times, tag_ADD, tag_Score, tag_Times):
     CANVA.itemconfig(tag_ADD, text= f"+{add}")
     CANVA.itemconfig(tag_Score, text= f"目前分數：{score}")
     CANVA.itemconfig(tag_Times, text= f"剩餘次數：{times - ed}")
-
 

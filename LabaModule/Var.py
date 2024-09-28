@@ -19,9 +19,9 @@ def IMAGE(file, w, h):
     pic = ImageTk.PhotoImage(pc)
     return pic
 
-L_PIC = None
-M_PIC = None
-R_PIC = None
+L_pic = None
+M_pic = None
+R_pic = None
 text_ADD = None
 text_Score = None
 text_Times = None
