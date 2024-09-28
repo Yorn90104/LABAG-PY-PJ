@@ -15,7 +15,7 @@ def result(CANVA):
       Result_TXT(CANVA , score , add , ed , times , text_Score , text_ADD , text_Times)
       add = 0
 
-def ChangeA(x, y):
+def ChangeA( y):
       """根據隨機數生成圖片的歸屬 (歸屬, 隨機數)"""
       if y <= 36:
             return 'A'
@@ -107,9 +107,9 @@ def Begin(win ,canvas_Game) :
             ram1 , ram2 , ram3 = randint(1,100) , randint(1,100) , randint(1,100)
 
             #歸屬
-            p1 = ChangeA(p1,ram1)
-            p2 = ChangeA(p2,ram2)
-            p3 = ChangeA(p3,ram3)
+            p1 = ChangeA(ram1)
+            p2 = ChangeA(ram2)
+            p3 = ChangeA(ram3)
 
             #每隔0.5秒改圖片
             win.after(500 , lambda : Local(canvas_Game , L_PIC , p1 , 0 , 250))
