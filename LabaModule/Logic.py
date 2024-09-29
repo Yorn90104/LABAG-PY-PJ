@@ -1,5 +1,5 @@
 from random import randint
-from LabaModule.Var import ram1, ram2, ram3, p1, p2, p3, score, add, ed, times, same1, same2, same3, L_pic, M_pic, R_pic
+from LabaModule.Var import ram1, ram2, ram3, p1, p2, p3, score, history_score, add, ed, times, same1, same2, same3, L_pic, M_pic, R_pic
 from LabaModule.UI import  init , change_picture, result_txt 
 from LabaModule.Sound import Ding , bgm_on_off
 
@@ -110,8 +110,14 @@ def button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_
       win.bind('<Return>', lambda event: Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music))
       button_begin.config(state='normal')
 
-def game_over(frame_Game, frame_End, canvas_End, score, button_music):
-      global times, ed
+def history_score_txt(canvas_End):
+      global score, history_score
+      if score > history_score :
+            history_score = score
+            canvas_End.itemconfig("HS", text=f"歷史最高分數：{history_score}" ) 
+
+def game_over(frame_Game, frame_End, canvas_End, button_music):
+      global score, history_score, times, ed 
       print("遊戲已結束")
       print(f"最終分數為：{score}")
       bgm_on_off(button_music, times, ed)
@@ -120,18 +126,22 @@ def game_over(frame_Game, frame_End, canvas_End, score, button_music):
       print("切換End畫面")
       frame_End.pack(fill='both', expand=True)  # 顯示遊戲結束畫面
       canvas_End.itemconfig("over", text="遊戲結束！") 
-      canvas_End.itemconfig("final_score", text=f"最終分數：{score}")  # 更新分數顯示
+      canvas_End.itemconfig("final_score", text=f"最終分數：{score}")  # 最終分數顯示
+      history_score_txt(canvas_End) #歷史分數更新
       Ding()
 
 def game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music) :
-      global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed  , times
+      global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed  , times, history_score
       ram1, ram2, ram3 = 0 , 0 , 0
       p1, p2, p3 = '', '', ''
       score, add, ed = 0 , 0 , 0
 
       init(canvas_Game, score, times , ed)
+      bgm_on_off(button_music)
+      canvas_Game.itemconfig("history_score", text=f"歷史最高分數：{history_score}" ) 
       button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music)
       frame_End.pack_forget()
+      print("切換Game畫面")
       frame_Game.pack(fill='both', expand=True)
 
 
@@ -170,7 +180,7 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
                 win.after(3500, lambda : button_unable(win, button_begin))
                 
                 # 切換到結束畫面
-                win.after(3500, lambda : game_over(frame_Game , frame_End , canvas_End, score, button_music))
+                win.after(3500, lambda : game_over(frame_Game , frame_End , canvas_End, button_music))
 
                 
             else:

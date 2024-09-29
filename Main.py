@@ -14,7 +14,7 @@ win.resizable(False, False)
 
 
 from LabaModule.UI import setup_frame ,  load_pic , Text, img_button ,txt_button
-from LabaModule.Var import score, times, ed, Title, QST, BeginPIC, AgainPIC, SB,  L_pic, M_pic, R_pic, text_add, text_score, text_times
+from LabaModule.Var import score, history_score, times, ed, Title, QST, BeginPIC, AgainPIC, SB,  L_pic, M_pic, R_pic, text_add, text_score, text_times
 from LabaModule.Logic import Begin, game_again
 
 #建立 GAME & END 畫面
@@ -52,6 +52,15 @@ text_times = Text(
                 16 ,
                 "white" ,
                 "Times"
+                )
+text_history_score = Text(
+                canvas_Game ,
+                5, 775 ,
+                f"歷史最高分數：{history_score}" ,
+                16 ,
+                "#FFBF00",
+                "history_score",
+                "w" #靠左對齊
                 )
 
 button_music = txt_button(
@@ -92,9 +101,17 @@ text_final_score = Text(
                         225 , 325 ,
                         "" ,
                         32 ,
-                        "gold" ,
+                        "#FF0000" ,
                         "final_score"
                         )
+text_HS = Text(
+                canvas_End ,
+                225, 450 ,
+                f"歷史最高分數：{history_score}" ,
+                16 ,
+                "#FFBF00" ,
+                "HS"
+                )
 
 button_again = img_button(
                         win,

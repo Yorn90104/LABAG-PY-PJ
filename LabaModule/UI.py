@@ -70,15 +70,16 @@ def txt_button(win , CMD , CANVA, txt, w, h, x = 0, y = 0, size = 12, font_color
 
     return but
 
-def Text(CANVA , x , y , txt , size = 12 , color = "white" , tg = ""):
-    """添加粗體文字(畫面,水平位置,垂直位置,大小,顏色,標記)"""
+def Text(CANVA , x , y , txt , size = 12 , color = "white" , tg = "", align = "center"):
+    """添加粗體文字(畫面,水平位置,垂直位置,大小,顏色,標記,對齊方式[東南西北])"""
     txt = CANVA.create_text(
                             x,
                             y,
                             text = txt ,
                             font = ("Arial", size , "bold") ,
                             fill = color ,
-                            tag = tg
+                            tag = tg,
+                            anchor = align
                             )
     return txt
 
