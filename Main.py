@@ -18,12 +18,12 @@ from LabaModule.Var import score, history_score, times, ed, Title, QST, BeginPIC
 from LabaModule.Logic import Begin, game_again
 
 #建立 GAME & END 畫面
-frame_Game, canvas_Game = setup_frame(win)
+frame_Game, canvas_Game = setup_frame(win, "BG")
 frame_End, canvas_End =setup_frame(win)
 
 #region GAME畫面
 
-pic_title = load_pic(canvas_Game , Title , 0 , 25 , "TITLE")
+pic_title = load_pic(canvas_Game , Title , 0 , 25 , "Title")
 
 L_pic = load_pic(canvas_Game , QST, 0, 250 , "LP")
 M_pic = load_pic(canvas_Game , QST, 150, 250 , "MP")

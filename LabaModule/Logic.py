@@ -1,7 +1,16 @@
 from random import randint
-from LabaModule.Var import ram1, ram2, ram3, p1, p2, p3, score, history_score, add, ed, times, same1, same2, same3, L_pic, M_pic, R_pic
+from LabaModule.Var import (
+                        ram1, ram2, ram3,
+                        p1, p2, p3, all_p,
+                        score, history_score, add,
+                        ed, times,
+                        same1, same2, same3,
+                        L_pic, M_pic, R_pic,
+                        )
 from LabaModule.UI import  init , change_picture, result_txt 
 from LabaModule.Sound import Ding , bgm_on_off
+
+from LabaModule.SuperHhh import super_ram, judge_super
 
 # 主要邏輯流程：
 # 按鈕或鍵盤事件觸發 Begin 函數。
@@ -24,8 +33,8 @@ def result(CANVA):
       result_txt(CANVA , score , add , ed , times)
       add = 0
 
-def ChangePrize( y):
-      """根據隨機數生成圖片的歸屬 (歸屬, 隨機數)"""
+def change_rate( y):
+      """根據隨機數和機率找歸屬 (隨機數)"""
       if y <= 36:
             return 'A'
       elif 36 < y <= 60:
@@ -146,7 +155,7 @@ def game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_E
 
 
 def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music) :
-      global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed , times ,  L_pic , M_pic , R_pic
+      global ram1, ram2, ram3, p1, p2, p3, all_p,  score, add, ed, times,  L_pic, M_pic, R_pic
 
       print(u"按鈕被點擊了！")
       button_unable(win , button_begin)
@@ -158,11 +167,16 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
 
             #隨機數
             ram1 , ram2 , ram3 = randint(1,100) , randint(1,100) , randint(1,100)
+            print(f"圖片隨機數為：{ram1} | {ram2} | {ram3}")
+            super_ram()
 
             #歸屬
-            p1 = ChangePrize(ram1)
-            p2 = ChangePrize(ram2)
-            p3 = ChangePrize(ram3)
+            p1 = change_rate(ram1)
+            p2 = change_rate(ram2)
+            p3 = change_rate(ram3)
+            
+            all_p = [p1, p2, p3]
+            judge_super(win, canvas_Game, all_p)
 
             #每隔0.5秒改圖片
             win.after(500 , lambda : change_picture(canvas_Game , "LP" , p1))

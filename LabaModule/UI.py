@@ -1,13 +1,19 @@
 import tkinter as tk
-from LabaModule.Var import BG , QST , picture 
+
+from LabaModule.Var import (
+                            BG, SuperBG,
+                            QST, SuperQST,
+                            picture,
+                            SuperHHH
+                            )
 from LabaModule.Sound import Ding
 
-def setup_frame(win):
+def setup_frame(win, tg=""):
     """設置畫面"""
     Frame = tk.Frame(win, width=450, height=800, bg='lightblue')
     Canvas = tk.Canvas(Frame, width=450, height=800)
     Canvas.pack(fill="both", expand=True)
-    Canvas.create_image(0, 0, image = BG, anchor="nw")
+    Canvas.create_image(0, 0, image = BG, anchor="nw", tag= tg)
     return Frame, Canvas
 
 def load_pic(CANVA, pc, x = 0, y = 0 , tg = ""):
@@ -20,9 +26,15 @@ def update_pic(CANVA , tg ,  pc) :
     CANVA.itemconfig(tg , image = pc)
 
 def init(CANVA, score, times, ed):
-    update_pic(CANVA , "LP" , QST)
-    update_pic(CANVA , "MP" , QST)
-    update_pic(CANVA , "RP" , QST)
+    global SuperHHH
+    if SuperHHH == True:
+        update_pic(CANVA , "LP" , SuperQST)
+        update_pic(CANVA , "MP" , SuperQST)
+        update_pic(CANVA , "RP" , SuperQST)
+    else:
+        update_pic(CANVA , "LP" , QST)
+        update_pic(CANVA , "MP" , QST)
+        update_pic(CANVA , "RP" , QST)
 
     CANVA.itemconfig("Add", text=f"")
     CANVA.itemconfig("Score", text= f"目前分數：{score}")
@@ -89,5 +101,8 @@ def result_txt(CANVA , score, add, ed, times):
     CANVA.itemconfig("Score", text= f"目前分數：{score}")
     CANVA.itemconfig("Times", text= f"剩餘次數：{times - ed}")
 
+def delete_button(btn):
+    """删除按钮"""
+    btn.destroy()
 
 
