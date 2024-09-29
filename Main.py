@@ -12,12 +12,8 @@ win.iconbitmap('.\\Asset\\Superhhh.ico')
 win.geometry("450x800")
 win.resizable(False, False)
 
-# 初始化音效
-from LabaModule.Sound import bgm_on_off
-pygame.mixer.init()
-bgm_on_off()
 
-from LabaModule.UI import setup_frame ,  load_pic , Button , Text
+from LabaModule.UI import setup_frame ,  load_pic , Text, img_button ,txt_button
 from LabaModule.Var import score, times, ed, Title, QST, BeginPIC, AgainPIC, SB,  L_pic, M_pic, R_pic, text_add, text_score, text_times
 from LabaModule.Logic import Begin, game_again
 
@@ -33,26 +29,88 @@ L_pic = load_pic(canvas_Game , QST, 0, 250 , "LP")
 M_pic = load_pic(canvas_Game , QST, 150, 250 , "MP")
 R_pic = load_pic(canvas_Game , QST, 300, 250 , "RP")
 
-text_add = Text(canvas_Game , 225 , 475 , "" , 16 , "yellow" , "Add")
-text_score = Text(canvas_Game , 225 , 500 , f"目前分數：{score}" , 16 , "white" , "Score")
-text_times = Text(canvas_Game , 225 , 525 , f"剩餘次數：{times - ed}" , 16 , "white" , "Times")
+text_add = Text(
+                canvas_Game ,
+                225 , 475 ,
+                "" ,
+                16 ,
+                "yellow" ,
+                "Add"
+                )
+text_score = Text(
+                canvas_Game ,
+                225 , 500 ,
+                f"目前分數：{score}" ,
+                16 ,
+                "white" ,
+                "Score"
+                )
+text_times = Text(
+                canvas_Game ,
+                225 , 525 ,
+                f"剩餘次數：{times - ed}" ,
+                16 ,
+                "white" ,
+                "Times"
+                )
 
-button_begin = Button(win , lambda :Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End) , canvas_Game , 225 , 575 , BeginPIC)
-# 綁定 Enter 鍵啟動遊戲
-win.bind('<Return>', lambda event :Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End))
+button_music = txt_button(
+                        win,
+                        lambda : bgm_on_off(button_music),
+                        canvas_Game,
+                        "開",
+                        33, 33,
+                        415, 765,
+                        14,
+                        "black",
+                        "#00FF00"
+                        )
+
+button_begin = img_button(
+                        win ,
+                        lambda :Begin(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music) ,
+                        canvas_Game,
+                        BeginPIC,
+                        225, 575
+                        )
+win.bind('<Return>', lambda event :Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music))# 綁定 Enter 鍵
 
 #endregion
 
 #region END畫面
 
-text_over = Text(canvas_End , 225 , 280 , "遊戲結束！" , 42 , "white" , "over")
-text_final_score = Text(canvas_End , 225 , 345 , "" , 32 , "gold" , "final_score")
+text_over = Text(
+                canvas_End ,
+                225 , 260 ,
+                "遊戲結束！" ,
+                42 ,
+                "white" ,
+                "over"
+                )
+text_final_score = Text(
+                        canvas_End ,
+                        225 , 325 ,
+                        "" ,
+                        32 ,
+                        "gold" ,
+                        "final_score"
+                        )
 
-button_again = Button(win,lambda: game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End), canvas_End, 225, 425, AgainPIC)
+button_again = img_button(
+                        win,
+                        lambda: game_again(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music),
+                        canvas_End, AgainPIC,
+                        225, 400
+                        )
 
 pic_SB = load_pic(canvas_End , SB, 0, 500, "SB")
 #endregion
 
 frame_Game.pack(fill='both', expand=True)
+
+# 初始化音效
+from LabaModule.Sound import bgm_on_off
+pygame.mixer.init()
+bgm_on_off(button_music)
 
 win.mainloop()

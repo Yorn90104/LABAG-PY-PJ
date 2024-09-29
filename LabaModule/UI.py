@@ -10,7 +10,7 @@ def setup_frame(win):
     Canvas.create_image(0, 0, image = BG, anchor="nw")
     return Frame, Canvas
 
-def load_pic(CANVA, pc, x, y , tg):
+def load_pic(CANVA, pc, x = 0, y = 0 , tg = ""):
     """加載新的圖片並放在CANVA上 (畫面 , 照片, 水平座標, 垂直座標, 標記)"""
     pic = CANVA.create_image(x, y, image = pc, anchor = "nw" , tag = tg)
     return pic
@@ -49,15 +49,37 @@ def change_picture(CANVA , tg , p):
     update_pic(CANVA, tg , new_pic)
     Ding()
 
-def Button(win , CMD , CANVA,  x , y , img):
+def img_button(win , CMD , CANVA , img, x = 0, y = 0):
     """添加按鈕(視窗,執行動作,畫面,水平位置,垂直位置)"""
     but = tk.Button(win , image = img , command = CMD)
     CANVA.create_window(x , y , window = but)
     return but
 
-def Text(CANVA , x , y , txt , size , color , tg):
+def txt_button(win , CMD , CANVA, txt, w, h, x = 0, y = 0, size = 12, font_color = "black", bg_color = "white"):
+    """添加按鈕(視窗,執行動作,畫面,水平位置,垂直位置)"""
+    but = tk.Button(
+                    win ,
+                    text = txt ,
+                    command = CMD,
+                    font = ("Arial", size, "bold"),
+                    fg = font_color,
+                    bg = bg_color
+                             )
+    # 按钮的位置&像素大小
+    but.place(x=x, y=y, width=w, height=h)
+
+    return but
+
+def Text(CANVA , x , y , txt , size = 12 , color = "white" , tg = ""):
     """添加粗體文字(畫面,水平位置,垂直位置,大小,顏色,標記)"""
-    txt = CANVA.create_text(x, y, text = txt , font = ("Arial", size , "bold") , fill = color , tag = tg)
+    txt = CANVA.create_text(
+                            x,
+                            y,
+                            text = txt ,
+                            font = ("Arial", size , "bold") ,
+                            fill = color ,
+                            tag = tg
+                            )
     return txt
 
 def result_txt(CANVA , score, add, ed, times):

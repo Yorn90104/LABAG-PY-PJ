@@ -1,7 +1,7 @@
 from random import randint
 from LabaModule.Var import ram1, ram2, ram3, p1, p2, p3, score, add, ed, times, same1, same2, same3, L_pic, M_pic, R_pic
 from LabaModule.UI import  init , change_picture, result_txt 
-from LabaModule.Sound import Ding, bgm_on_off
+from LabaModule.Sound import Ding , bgm_on_off
 
 # 主要邏輯流程：
 # 按鈕或鍵盤事件觸發 Begin 函數。
@@ -106,38 +106,36 @@ def button_unable(win , button) :
       win.unbind('<Return>')  # 取消Enter鍵的綁定
       button.config(state='disabled')  # 停用按鈕
 
-def button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End):
-      win.bind('<Return>', lambda event: Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End))
+def button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music):
+      win.bind('<Return>', lambda event: Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music))
       button_begin.config(state='normal')
 
-def game_over(frame_Game, frame_End, canvas_End, score):
+def game_over(frame_Game, frame_End, canvas_End, score, button_music):
       global times, ed
       print("遊戲已結束")
       print(f"最終分數為：{score}")
+      bgm_on_off(button_music, times, ed)
       """遊戲結束，切換到結果頁面"""
       frame_Game.pack_forget()  # 隱藏遊戲畫面
-      bgm_on_off(times, ed)
       print("切換End畫面")
       frame_End.pack(fill='both', expand=True)  # 顯示遊戲結束畫面
       canvas_End.itemconfig("over", text="遊戲結束！") 
       canvas_End.itemconfig("final_score", text=f"最終分數：{score}")  # 更新分數顯示
       Ding()
 
-def game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End) :
+def game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music) :
       global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed  , times
       ram1, ram2, ram3 = 0 , 0 , 0
       p1, p2, p3 = '', '', ''
       score, add, ed = 0 , 0 , 0
 
       init(canvas_Game, score, times , ed)
-      button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End)
-      bgm_on_off()
-      
+      button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music)
       frame_End.pack_forget()
       frame_Game.pack(fill='both', expand=True)
 
 
-def Begin(win ,canvas_Game ,  button_begin, frame_Game, frame_End, canvas_End) :
+def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music) :
       global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed , times ,  L_pic , M_pic , R_pic
 
       print(u"按鈕被點擊了！")
@@ -172,9 +170,9 @@ def Begin(win ,canvas_Game ,  button_begin, frame_Game, frame_End, canvas_End) :
                 win.after(3500, lambda : button_unable(win, button_begin))
                 
                 # 切換到結束畫面
-                win.after(3500, lambda : game_over(frame_Game , frame_End , canvas_End, score))
+                win.after(3500, lambda : game_over(frame_Game , frame_End , canvas_End, score, button_music))
 
                 
             else:
                 # 遊戲繼續
-                win.after(3500 , lambda : button_able(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End))
+                win.after(3500 , lambda : button_able(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music))

@@ -1,11 +1,16 @@
 from PIL import Image, ImageTk
 
 # 遊戲邏輯變數
+times = 3
+ed = 0
+score, add= 0, 0
+history_score = 0
+
+#遊戲後臺變數
 ram1, ram2, ram3 = 0, 0, 0
 p1, p2, p3 = '', '', ''
-score, add, ed = 0, 0, 0
-times = 30
 
+#分數清單
 same3 = [200, 600, 1600, 1800, 10000, 20000]
 same2 = [100, 170, 780, 870, 5000, 10000]
 same1 = [30, 50, 250, 290, 1200, 2500]
