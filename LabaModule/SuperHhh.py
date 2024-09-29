@@ -66,7 +66,7 @@ def judge_super(win, canvas_Game, all_p, button_music, game_running = True):
             if any(x == "B" for x in all_p):
                 hhh_appear = True
 
-            if SuperRam <= 50 and hhh_appear :
+            if SuperRam <= 15 and hhh_appear :#超級阿禾出現的機率
                 SuperHHH = True
                 SuperTimes = 6
                 win.after(3000 , lambda : change_hhh(canvas_Game,all_p))
@@ -80,4 +80,11 @@ def super_times(win,canvas_Game) :
     if SuperHHH :
         SuperTimes -= 1
         win.after(3000 , lambda : canvas_Game.itemconfig("mod_time", text = f"超級阿禾剩餘次數:{SuperTimes}次", fill = "#FF00FF"))
+
+def switch_super_rate(original_rate,super_rate):
+    global SuperHHH
+    if SuperHHH :
+        return super_rate
+    else :
+        return original_rate
         

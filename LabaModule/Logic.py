@@ -2,15 +2,15 @@ from random import randint
 from LabaModule.Var import (
                         ram1, ram2, ram3,
                         p1, p2, p3, all_p,
+                        normal_acc,super_acc,
                         score, history_score, add,
                         ed, times,
-                        same1, same2, same3,
-                        L_pic, M_pic, R_pic,
+                        same1, same2, same3
                         )
 from LabaModule.UI import  init , change_picture, result_txt 
 from LabaModule.Sound import Ding , bgm_on_off
 
-from LabaModule.SuperHhh import super_ram, judge_super, super_times
+from LabaModule.SuperHhh import super_ram, judge_super, super_times, switch_super_rate
 
 # 主要邏輯流程：
 # 按鈕或鍵盤事件觸發 Begin 函數。
@@ -33,19 +33,19 @@ def result(canvas_Game):
       result_txt(canvas_Game , score , add , ed , times)
       add = 0
 
-def change_rate( y):
+def change_rate(rate, y):
       """根據隨機數和機率找歸屬 (隨機數)"""
-      if y <= 36:
+      if y <= rate[0] :
             return 'A'
-      elif 36 < y <= 60:
+      elif y <= rate[1] :
             return 'B'
-      elif 60 < y <= 77:
+      elif y <= rate[2] :
             return 'C'
-      elif 77 < y <= 89:
+      elif y <= rate[3] :
             return 'D'
-      elif 89 < y <= 97:
+      elif y <= rate[4] :
             return 'E'
-      else:
+      elif y <= rate[5] :
             return 'F'
 
 def ADD(x, y, lst):
@@ -155,7 +155,7 @@ def game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_E
 
 
 def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music) :
-      global ram1, ram2, ram3, p1, p2, p3, all_p,  score, add, ed, times,  L_pic, M_pic, R_pic 
+      global ram1, ram2, ram3, p1, p2, p3, all_p,  score, add, ed, normal_acc, super_acc
 
       print(u"按鈕被點擊了！")
       super_times(win,canvas_Game)
@@ -172,10 +172,12 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             super_ram()
             
 
-            #歸屬
-            p1 = change_rate(ram1)
-            p2 = change_rate(ram2)
-            p3 = change_rate(ram3)
+            #機率找歸屬
+            use_rate = switch_super_rate(normal_acc,super_acc)
+            print(use_rate)
+            p1 = change_rate(use_rate, ram1)
+            p2 = change_rate(use_rate, ram2)
+            p3 = change_rate(use_rate, ram3)
             
             all_p = [p1, p2, p3]
             judge_super(win, canvas_Game, all_p, button_music)
