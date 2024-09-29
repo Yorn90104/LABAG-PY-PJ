@@ -1,6 +1,15 @@
 from random import randint
 from LabaModule.Var import ram1, ram2, ram3, p1, p2, p3, score, add, ed, times, same1, same2, same3, L_pic, M_pic, R_pic
-from LabaModule.UI import  init , change_picture , result_txt 
+from LabaModule.UI import  init , change_picture, result_txt 
+from LabaModule.Sound import Ding
+
+# 主要邏輯流程：
+# 按鈕或鍵盤事件觸發 Begin 函數。
+# 重置畫面，並初始化變量。
+# 生成三個隨機數，每個隨機數對應不同的圖片。
+# 按時間間隔改變畫面中的三張圖片，每隔 0.5 秒更新一張圖片。
+# 計算得分，根據三張圖片的組合（是否相同）來計算加分。
+# 顯示結果，更新畫面上的分數、加分和剩餘次數。
 
 
 def result(CANVA):
@@ -12,7 +21,7 @@ def result(CANVA):
       print(f' | {p1} | {p2} | {p3} |')
       print(f"+{add}")
       print(f"目前分數：{score}")
-      result_txt(CANVA , score , add , ed , times , "Add" , "Score" , "Times" )
+      result_txt(CANVA , score , add , ed , times)
       add = 0
 
 def ChangeA( y):
@@ -93,11 +102,45 @@ def calculate_score(p1 , p2 , p3 , a):
             a = round( a / 3 )
       return a
 
-def Begin(win ,canvas_Game ,  button_Begin) :
+def button_unable(win , button) :
+      win.unbind('<Return>')  # 取消Enter鍵的綁定
+      button.config(state='disabled')  # 停用按鈕
+
+def button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End):
+      win.bind('<Return>', lambda event: Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End))
+      button_begin.config(state='normal')
+
+def game_over(frame_Game, frame_End, canvas_End, score):
+      print("遊戲已結束")
+      print(f"最終分數為：{score}")
+      """遊戲結束，切換到結果頁面"""
+      frame_Game.pack_forget()  # 隱藏遊戲畫面
+      print("切換End畫面")
+      frame_End.pack(fill='both', expand=True)  # 顯示遊戲結束畫面
+      canvas_End.itemconfig("over", text="遊戲結束！") 
+      canvas_End.itemconfig("final_score", text=f"最終分數：{score}")  # 更新分數顯示
+      Ding()
+
+def game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End) :
+      global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed  , times
+      ram1, ram2, ram3 = 0 , 0 , 0
+      p1, p2, p3 = '', '', ''
+      score, add, ed = 0 , 0 , 0
+
+      init(canvas_Game, score, times , ed)
+      button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End)
+
+      frame_End.pack_forget()
+      frame_Game.pack(fill='both', expand=True)
+
+
+def Begin(win ,canvas_Game ,  button_begin, frame_Game, frame_End, canvas_End) :
       global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed , times ,  L_pic , M_pic , R_pic
 
       print(u"按鈕被點擊了！")
-      init(canvas_Game)
+      button_unable(win , button_begin)
+
+      init(canvas_Game, score, times , ed)
       
 
       if ed  < times :
@@ -119,3 +162,16 @@ def Begin(win ,canvas_Game ,  button_Begin) :
             add = calculate_score(p1 , p2 , p3 , add)
             
             win.after(3000 , lambda : result(canvas_Game))
+
+            if ed + 1 >= times:
+                # 判斷遊戲結束
+                # 停用按鈕和鍵盤事件
+                win.after(3500, lambda : button_unable(win, button_begin))
+                
+                # 切換到結束畫面
+                win.after(3500, lambda : game_over(frame_Game , frame_End , canvas_End, score))
+
+                
+            else:
+                # 遊戲繼續
+                win.after(3500 , lambda : button_able(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End))

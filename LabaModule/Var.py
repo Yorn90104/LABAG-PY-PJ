@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 ram1, ram2, ram3 = 0, 0, 0
 p1, p2, p3 = '', '', ''
 score, add, ed = 0, 0, 0
-times = 30
+times = 3
 
 same3 = [200, 600, 1600, 1800, 10000, 20000]
 same2 = [100, 170, 780, 870, 5000, 10000]
@@ -22,9 +22,9 @@ def IMAGE(file, w, h):
 L_pic = None
 M_pic = None
 R_pic = None
-text_ADD = None
-text_Score = None
-text_Times = None
+text_add = None
+text_score = None
+text_times = None
 
 BG = IMAGE('.\\Asset\\BG.png' , 450 , 800)
 Title = IMAGE('.\\Asset\\Title.png' , 450 , 253)
@@ -35,8 +35,9 @@ Hentai = IMAGE('.\\Asset\\Hentai.jpg' , 150 , 200)  # C
 Handsun = IMAGE('.\\Asset\\Handsun.jpg' , 150 , 200)  # D
 Kachu = IMAGE('.\\Asset\\Kachu.jpg' , 150 , 200)  # E
 Rrr = IMAGE('.\\Asset\\RRR.jpg' , 150 , 200)  # F
-BeginPIC = IMAGE('.\\Asset\\Start.jpg' , 150 , 50)
 SB = IMAGE('.\\Asset\\SB.png' , 450 , 169) #記分板
+BeginPIC = IMAGE('.\\Asset\\BeginPIC.jpg' , 150 , 50)
+AgainPIC = IMAGE('.\\Asset\\AgainPIC.jpg' , 150 , 50)
 
 picture = [Gss , Hhh , Hentai , Handsun , Kachu , Rrr]
 
