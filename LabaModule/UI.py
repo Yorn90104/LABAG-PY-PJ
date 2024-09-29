@@ -1,5 +1,5 @@
 import tkinter as tk
-from LabaModule.Var import BG , QST , BeginPIC , picture 
+from LabaModule.Var import BG , QST , picture 
 from LabaModule.Sound import Ding
 
 def setup_frame(win):

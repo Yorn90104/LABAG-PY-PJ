@@ -4,8 +4,6 @@ sys.stdout.reconfigure(encoding='utf-8')
 import tkinter as tk
 import pygame
 
-# 初始化音效
-pygame.mixer.init()
 
 # 主視窗
 win = tk.Tk()
@@ -14,10 +12,16 @@ win.iconbitmap('.\\Asset\\Superhhh.ico')
 win.geometry("450x800")
 win.resizable(False, False)
 
+# 初始化音效
+from LabaModule.Sound import bgm_on_off
+pygame.mixer.init()
+bgm_on_off()
+
 from LabaModule.UI import setup_frame ,  load_pic , Button , Text
 from LabaModule.Var import score, times, ed, Title, QST, BeginPIC, AgainPIC, SB,  L_pic, M_pic, R_pic, text_add, text_score, text_times
 from LabaModule.Logic import Begin, game_again
 
+#建立 GAME & END 畫面
 frame_Game, canvas_Game = setup_frame(win)
 frame_End, canvas_End =setup_frame(win)
 

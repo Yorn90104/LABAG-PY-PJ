@@ -1,7 +1,7 @@
 from random import randint
 from LabaModule.Var import ram1, ram2, ram3, p1, p2, p3, score, add, ed, times, same1, same2, same3, L_pic, M_pic, R_pic
 from LabaModule.UI import  init , change_picture, result_txt 
-from LabaModule.Sound import Ding
+from LabaModule.Sound import Ding, bgm_on_off
 
 # 主要邏輯流程：
 # 按鈕或鍵盤事件觸發 Begin 函數。
@@ -24,7 +24,7 @@ def result(CANVA):
       result_txt(CANVA , score , add , ed , times)
       add = 0
 
-def ChangeA( y):
+def ChangePrize( y):
       """根據隨機數生成圖片的歸屬 (歸屬, 隨機數)"""
       if y <= 36:
             return 'A'
@@ -111,10 +111,12 @@ def button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_
       button_begin.config(state='normal')
 
 def game_over(frame_Game, frame_End, canvas_End, score):
+      global times, ed
       print("遊戲已結束")
       print(f"最終分數為：{score}")
       """遊戲結束，切換到結果頁面"""
       frame_Game.pack_forget()  # 隱藏遊戲畫面
+      bgm_on_off(times, ed)
       print("切換End畫面")
       frame_End.pack(fill='both', expand=True)  # 顯示遊戲結束畫面
       canvas_End.itemconfig("over", text="遊戲結束！") 
@@ -129,7 +131,8 @@ def game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_E
 
       init(canvas_Game, score, times , ed)
       button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End)
-
+      bgm_on_off()
+      
       frame_End.pack_forget()
       frame_Game.pack(fill='both', expand=True)
 
@@ -149,9 +152,9 @@ def Begin(win ,canvas_Game ,  button_begin, frame_Game, frame_End, canvas_End) :
             ram1 , ram2 , ram3 = randint(1,100) , randint(1,100) , randint(1,100)
 
             #歸屬
-            p1 = ChangeA(ram1)
-            p2 = ChangeA(ram2)
-            p3 = ChangeA(ram3)
+            p1 = ChangePrize(ram1)
+            p2 = ChangePrize(ram2)
+            p3 = ChangePrize(ram3)
 
             #每隔0.5秒改圖片
             win.after(500 , lambda : change_picture(canvas_Game , "LP" , p1))

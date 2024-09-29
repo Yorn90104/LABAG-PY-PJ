@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 ram1, ram2, ram3 = 0, 0, 0
 p1, p2, p3 = '', '', ''
 score, add, ed = 0, 0, 0
-times = 3
+times = 30
 
 same3 = [200, 600, 1600, 1800, 10000, 20000]
 same2 = [100, 170, 780, 870, 5000, 10000]
@@ -40,5 +40,7 @@ BeginPIC = IMAGE('.\\Asset\\BeginPIC.jpg' , 150 , 50)
 AgainPIC = IMAGE('.\\Asset\\AgainPIC.jpg' , 150 , 50)
 
 picture = [Gss , Hhh , Hentai , Handsun , Kachu , Rrr]
+
+bgm_playing = False
 
 
