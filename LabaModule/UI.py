@@ -1,7 +1,7 @@
 import tkinter as tk
 
 from LabaModule.Var import (
-                            BG, SuperBG,
+                            BG,
                             QST, SuperQST,
                             picture,
                             SuperHHH
@@ -26,15 +26,10 @@ def update_pic(CANVA , tg ,  pc) :
     CANVA.itemconfig(tg , image = pc)
 
 def init(CANVA, score, times, ed):
-    global SuperHHH
-    if SuperHHH == True:
-        update_pic(CANVA , "LP" , SuperQST)
-        update_pic(CANVA , "MP" , SuperQST)
-        update_pic(CANVA , "RP" , SuperQST)
-    else:
-        update_pic(CANVA , "LP" , QST)
-        update_pic(CANVA , "MP" , QST)
-        update_pic(CANVA , "RP" , QST)
+    
+    update_pic(CANVA , "LP" , QST)
+    update_pic(CANVA , "MP" , QST)
+    update_pic(CANVA , "RP" , QST)
 
     CANVA.itemconfig("Add", text=f"")
     CANVA.itemconfig("Score", text= f"目前分數：{score}")
@@ -61,14 +56,20 @@ def change_picture(CANVA , tg , p):
     update_pic(CANVA, tg , new_pic)
     Ding()
 
-def img_button(win , CMD , CANVA , img, x = 0, y = 0):
-    """添加按鈕(視窗,執行動作,畫面,水平位置,垂直位置)"""
-    but = tk.Button(win , image = img , command = CMD)
+def img_button(win , CMD , CANVA , img, x = 0, y = 0, rel = "raised", highlight = 1):
+    """添加按鈕(視窗,執行動作,畫面,水平位置,垂直位置,三圍邊框效果,)"""
+    but = tk.Button(
+                    win ,
+                    image = img ,
+                    command = CMD,
+                    relief =  rel,
+                    highlightthickness = highlight
+                    )
     CANVA.create_window(x , y , window = but)
     return but
 
-def txt_button(win , CMD , CANVA, txt, w, h, x = 0, y = 0, size = 12, font_color = "black", bg_color = "white"):
-    """添加按鈕(視窗,執行動作,畫面,水平位置,垂直位置)"""
+def txt_button(win , CMD , CANVA, txt, w, h, x = 0, y = 0, size = 12, font_color = "black", bg_color = "white",tg = None):
+    """添加按鈕(視窗,執行動作,畫面,水平位置,垂直位置,大小,文字顏色,背景顏色,標籤)"""
     but = tk.Button(
                     win ,
                     text = txt ,
@@ -77,6 +78,9 @@ def txt_button(win , CMD , CANVA, txt, w, h, x = 0, y = 0, size = 12, font_color
                     fg = font_color,
                     bg = bg_color
                              )
+    if tg is not None:
+        but.tag = tg
+
     # 按钮的位置&像素大小
     but.place(x=x, y=y, width=w, height=h)
 

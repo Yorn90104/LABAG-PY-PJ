@@ -1,7 +1,7 @@
 from PIL import Image, ImageTk
 
 # 遊戲邏輯變數
-times = 30
+times = 10
 ed = 0
 score, add= 0, 0
 history_score = 0
@@ -54,9 +54,9 @@ bgm_playing = False
 
 #region 超級阿禾區
 
-SuperHHH= False
+SuperHHH = False
 SuperRam = 0
-SuperTtimes = 0
+SuperTimes = 0
 
 SuperBG = IMAGE('.\\Asset\\SuperBG.png' , 450 , 800)
 SuperTitle = IMAGE('.\\Asset\\SuperTitle.png' , 450 , 253)

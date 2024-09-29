@@ -62,17 +62,27 @@ text_history_score = Text(
                 "history_score",
                 "w" #靠左對齊
                 )
+#特殊模式顯示次數文字
+text_mod = Text(
+                canvas_Game ,
+                225 , 650 ,
+                "" ,
+                16 ,
+                "white",
+                "mod_time",
+                )
 
 button_music = txt_button(
                         win,
-                        lambda : bgm_on_off(button_music),
+                        lambda : bgm_on_off(button_music,'.\\Asset\\bgm.mp3'),
                         canvas_Game,
                         "開",
                         33, 33,
                         415, 765,
                         14,
                         "black",
-                        "#00FF00"
+                        "#00FF00",
+                        "button_music"
                         )
 
 button_begin = img_button(
@@ -125,9 +135,7 @@ pic_SB = load_pic(canvas_End , SB, 0, 500, "SB")
 
 frame_Game.pack(fill='both', expand=True)
 
-# 初始化音效
 from LabaModule.Sound import bgm_on_off
-pygame.mixer.init()
 bgm_on_off(button_music)
 
 win.mainloop()

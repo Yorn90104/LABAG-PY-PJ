@@ -10,7 +10,7 @@ from LabaModule.Var import (
 from LabaModule.UI import  init , change_picture, result_txt 
 from LabaModule.Sound import Ding , bgm_on_off
 
-from LabaModule.SuperHhh import super_ram, judge_super
+from LabaModule.SuperHhh import super_ram, judge_super, super_times
 
 # 主要邏輯流程：
 # 按鈕或鍵盤事件觸發 Begin 函數。
@@ -21,7 +21,7 @@ from LabaModule.SuperHhh import super_ram, judge_super
 # 顯示結果，更新畫面上的分數、加分和剩餘次數。
 
 
-def result(CANVA):
+def result(canvas_Game):
       """計算和顯示結果"""
       global score, add, ed, p1, p2, p3 
       ed += 1
@@ -30,7 +30,7 @@ def result(CANVA):
       print(f' | {p1} | {p2} | {p3} |')
       print(f"+{add}")
       print(f"目前分數：{score}")
-      result_txt(CANVA , score , add , ed , times)
+      result_txt(canvas_Game , score , add , ed , times)
       add = 0
 
 def change_rate( y):
@@ -129,7 +129,7 @@ def game_over(frame_Game, frame_End, canvas_End, button_music):
       global score, history_score, times, ed 
       print("遊戲已結束")
       print(f"最終分數為：{score}")
-      bgm_on_off(button_music, times, ed)
+      bgm_on_off(button_music, game_running = False)
       """遊戲結束，切換到結果頁面"""
       frame_Game.pack_forget()  # 隱藏遊戲畫面
       print("切換End畫面")
@@ -155,9 +155,10 @@ def game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_E
 
 
 def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music) :
-      global ram1, ram2, ram3, p1, p2, p3, all_p,  score, add, ed, times,  L_pic, M_pic, R_pic
+      global ram1, ram2, ram3, p1, p2, p3, all_p,  score, add, ed, times,  L_pic, M_pic, R_pic 
 
       print(u"按鈕被點擊了！")
+      super_times(win,canvas_Game)
       button_unable(win , button_begin)
 
       init(canvas_Game, score, times , ed)
@@ -169,6 +170,7 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             ram1 , ram2 , ram3 = randint(1,100) , randint(1,100) , randint(1,100)
             print(f"圖片隨機數為：{ram1} | {ram2} | {ram3}")
             super_ram()
+            
 
             #歸屬
             p1 = change_rate(ram1)
@@ -176,7 +178,7 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             p3 = change_rate(ram3)
             
             all_p = [p1, p2, p3]
-            judge_super(win, canvas_Game, all_p)
+            judge_super(win, canvas_Game, all_p, button_music)
 
             #每隔0.5秒改圖片
             win.after(500 , lambda : change_picture(canvas_Game , "LP" , p1))
@@ -192,11 +194,15 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
                 # 判斷遊戲結束
                 # 停用按鈕和鍵盤事件
                 win.after(3500, lambda : button_unable(win, button_begin))
-                
+
                 # 切換到結束畫面
                 win.after(3500, lambda : game_over(frame_Game , frame_End , canvas_End, button_music))
+                
+                #若在超級阿禾模式則還原
+                judge_super(win, canvas_Game, all_p, button_music, False)
 
                 
             else:
+                judge_super(win, canvas_Game, all_p, button_music)
                 # 遊戲繼續
                 win.after(3500 , lambda : button_able(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music))
