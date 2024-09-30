@@ -32,7 +32,7 @@ R_pic = load_pic(canvas_Game , QST, 300, 250 , "RP")
 
 text_add = Text(
                 canvas_Game ,
-                225 , 475 ,
+                225 , 478 ,
                 "" ,
                 16 ,
                 "yellow" ,
@@ -63,15 +63,25 @@ text_history_score = Text(
                 "history_score",
                 "w" #靠左對齊
                 )
-#特殊模式顯示次數文字
-text_mod = Text(
+#region 特殊模式顯示次數文字
+text_mod1 = Text(
                 canvas_Game ,
                 225 , 650 ,
                 "" ,
                 16 ,
                 "white",
-                "mod_time",
+                "mod_1",
                 )
+
+text_mod2 = Text(
+                canvas_Game ,
+                225 , 460 ,
+                "" ,
+                10 ,
+                "white",
+                "mod_2",
+                )
+#endregion
 
 button_music = txt_button(
                         win,

@@ -10,7 +10,7 @@ from LabaModule.Var import (
 from LabaModule.UI import  init , change_picture, result_txt 
 from LabaModule.Sound import Ding , bgm_on_off
 
-from LabaModule.SuperHhh import super_ram, judge_super, super_times, switch_super_rate
+from LabaModule.SuperHhh import super_ram, judge_super, super_times, switch_super_rate, three_super
 
 # 主要邏輯流程：
 # 按鈕或鍵盤事件觸發 Begin 函數。
@@ -23,11 +23,11 @@ from LabaModule.SuperHhh import super_ram, judge_super, super_times, switch_supe
 
 def result(canvas_Game):
       """計算和顯示結果"""
-      global score, add, ed, p1, p2, p3 
+      global score, add, ed, all_p
       ed += 1
       score += add
       print(f"第{ed}次")
-      print(f' | {p1} | {p2} | {p3} |')
+      print(f' | {all_p[0]} | {all_p[1]} | {all_p[2]} |')
       print(f"+{add}")
       print(f"目前分數：{score}")
       result_txt(canvas_Game , score , add , ed , times)
@@ -180,7 +180,7 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             p3 = change_rate(use_rate, ram3)
             
             all_p = [p1, p2, p3]
-            judge_super(win, canvas_Game, all_p, add, score, button_music)
+            judge_super(win, canvas_Game, all_p, button_music)
 
             #每隔0.5秒改圖片
             win.after(500 , lambda : change_picture(canvas_Game , "LP" , p1))
@@ -188,7 +188,9 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             win.after(1500 , lambda : change_picture(canvas_Game , "RP" , p3))
 
             #增加分數
+
             add = calculate_score(p1 , p2 , p3 , add)
+            add = three_super(win, canvas_Game, all_p, score, add)
             
             win.after(3000 , lambda : result(canvas_Game))
 
@@ -201,10 +203,10 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
                 win.after(3500, lambda : game_over(frame_Game , frame_End , canvas_End, button_music))
                 
                 #若在超級阿禾模式則還原
-                judge_super(win, canvas_Game, all_p, add, score, button_music, False)
+                judge_super(win, canvas_Game, all_p, button_music, False)
 
                 
             else:
-                judge_super(win, canvas_Game, all_p, add, score, button_music)
+                judge_super(win, canvas_Game, all_p, button_music)
                 # 遊戲繼續
                 win.after(3500 , lambda : button_able(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music))
