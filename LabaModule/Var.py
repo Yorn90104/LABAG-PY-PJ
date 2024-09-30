@@ -20,7 +20,7 @@ def acc_rate(original_rate):
         result_rate.append(acc)
     return result_rate
 
-normal_rate = [0, 60, 17, 12, 8, 3]
+normal_rate = [36, 60, 17, 12, 8, 3]
 normal_acc = acc_rate(normal_rate)
 
 super_rate = [19, 5, 19, 19, 19, 19]
