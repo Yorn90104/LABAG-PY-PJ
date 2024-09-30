@@ -112,7 +112,7 @@ def calculate_score(p1 , p2 , p3 , a):
       return a
 
 def button_unable(win , button) :
-      win.unbind('<Return>')  # 取消Enter鍵的綁定
+      win.unbind('<space>')  # 取消space鍵的綁定
       button.config(state='disabled')  # 停用按鈕
 
 def button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music):
@@ -157,7 +157,7 @@ def game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_E
 def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music) :
       global ram1, ram2, ram3, p1, p2, p3, all_p,  score, add, ed, normal_acc, super_acc
 
-      print(u"按鈕被點擊了！")
+      print(u"\n按鈕被點擊了！")
       super_times(win,canvas_Game)
       button_unable(win , button_begin)
 

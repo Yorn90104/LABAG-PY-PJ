@@ -93,7 +93,7 @@ button_begin = img_button(
                         BeginPIC,
                         225, 575
                         )
-win.bind('<space>', lambda event :Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music))# 綁定 Enter 鍵
+win.bind('<space>', lambda event :Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music))# 綁定 space 鍵
 
 #endregion
 
