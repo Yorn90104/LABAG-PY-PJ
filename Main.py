@@ -1,3 +1,4 @@
+#需先下載 Pillow 和 Pygame (pip install ******)
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -92,7 +93,7 @@ button_begin = img_button(
                         BeginPIC,
                         225, 575
                         )
-win.bind('<Return>', lambda event :Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music))# 綁定 Enter 鍵
+win.bind('<space>', lambda event :Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music))# 綁定 Enter 鍵
 
 #endregion
 

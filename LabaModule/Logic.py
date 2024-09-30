@@ -116,7 +116,7 @@ def button_unable(win , button) :
       button.config(state='disabled')  # 停用按鈕
 
 def button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music):
-      win.bind('<Return>', lambda event: Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music))
+      win.bind('<space>', lambda event: Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music))
       button_begin.config(state='normal')
 
 def history_score_txt(canvas_End):
@@ -180,7 +180,7 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             p3 = change_rate(use_rate, ram3)
             
             all_p = [p1, p2, p3]
-            judge_super(win, canvas_Game, all_p, button_music)
+            judge_super(win, canvas_Game, all_p, add, score, button_music)
 
             #每隔0.5秒改圖片
             win.after(500 , lambda : change_picture(canvas_Game , "LP" , p1))
@@ -201,10 +201,10 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
                 win.after(3500, lambda : game_over(frame_Game , frame_End , canvas_End, button_music))
                 
                 #若在超級阿禾模式則還原
-                judge_super(win, canvas_Game, all_p, button_music, False)
+                judge_super(win, canvas_Game, all_p, add, score, button_music, False)
 
                 
             else:
-                judge_super(win, canvas_Game, all_p, button_music)
+                judge_super(win, canvas_Game, all_p, add, score, button_music)
                 # 遊戲繼續
                 win.after(3500 , lambda : button_able(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music))

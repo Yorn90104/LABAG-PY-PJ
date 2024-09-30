@@ -12,13 +12,21 @@ from LabaModule.Var import (SuperHHH,
 from LabaModule.UI import img_button, delete_button
 from LabaModule.Sound import super_up, switch_music, bgm_on_off
 
+def super_double(canvas_Game, all_p ,add, score):
+    """"超級阿禾加倍 獲得當前分數0.5倍的分數"""
+    if all(p == "B" for p in all_p):#檢查是否三個超級阿禾
+        double = round( score / 2 )
+        add += double
+        print(f"阿禾加倍分：{double}")
+        canvas_Game.itemconfig("Add", text = f"+{add}(阿禾加倍分：{double}))")
+
 def super_ram():
     """阿禾隨機數"""
     global SuperRam
     SuperRam = randint(1,100)
     print(f"超級阿禾隨機數為：{SuperRam}")
 
-def change_hhh(canvas_Game, all_p):
+def change_hhh(canvas_Game, all_p, add, score):
     """把普通阿禾變成超級阿禾"""
     global super_hhh
     if all_p[0] == "B":
@@ -27,6 +35,7 @@ def change_hhh(canvas_Game, all_p):
         canvas_Game.itemconfig("MP" , image = super_hhh)
     if all_p[2] == "B":
         canvas_Game.itemconfig("RP" , image = super_hhh)
+    super_double(canvas_Game, all_p, add, score)
     super_up()
 
 def super_screen(win,canvas_Game :tk.Canvas , button_music, game_running = True):
@@ -51,7 +60,7 @@ def super_screen(win,canvas_Game :tk.Canvas , button_music, game_running = True)
         switch_music('.\\Asset\\bgm.mp3',game_running)
 
 
-def judge_super(win, canvas_Game, all_p, button_music, game_running = True):
+def judge_super(win, canvas_Game, all_p, add, score, button_music, game_running = True):
     """判斷超級阿禾"""
     global SuperRam, SuperHHH, SuperTimes
     if game_running :
@@ -69,7 +78,7 @@ def judge_super(win, canvas_Game, all_p, button_music, game_running = True):
             if SuperRam <= 15 and hhh_appear :#超級阿禾出現的機率
                 SuperHHH = True
                 SuperTimes = 6
-                win.after(3000 , lambda : change_hhh(canvas_Game,all_p))
+                win.after(3000 , lambda : change_hhh(canvas_Game,all_p, add, score))
                 win.after(3500 , lambda : super_screen(win, canvas_Game, button_music))
     else :
         SuperHHH = False
@@ -79,6 +88,7 @@ def super_times(win,canvas_Game) :
     global SuperHHH, SuperTimes
     if SuperHHH :
         SuperTimes -= 1
+        print(f"超級阿禾剩餘次數:{SuperTimes}次")
         win.after(3000 , lambda : canvas_Game.itemconfig("mod_time", text = f"超級阿禾剩餘次數:{SuperTimes}次", fill = "#FF00FF"))
 
 def switch_super_rate(original_rate,super_rate):
@@ -87,4 +97,3 @@ def switch_super_rate(original_rate,super_rate):
         return super_rate
     else :
         return original_rate
-        
