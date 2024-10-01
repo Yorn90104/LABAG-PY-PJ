@@ -157,7 +157,7 @@ def game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_E
 def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music) :
       global ram1, ram2, ram3, p1, p2, p3, all_p,  score, add, ed, normal_acc, super_acc
 
-      print(u"\n按鈕被點擊了！")
+      print(u"\n開始按鈕被點擊了！")
       super_times(win,canvas_Game)
       button_unable(win , button_begin)
 
@@ -174,7 +174,7 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
 
             #機率找歸屬
             use_rate = switch_super_rate(normal_acc,super_acc)
-            print(use_rate)
+            print(f"機率區間：{use_rate}")
             p1 = change_rate(use_rate, ram1)
             p2 = change_rate(use_rate, ram2)
             p3 = change_rate(use_rate, ram3)

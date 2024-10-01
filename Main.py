@@ -85,7 +85,7 @@ text_mod2 = Text(
 
 button_music = txt_button(
                         win,
-                        lambda : bgm_on_off(button_music,'.\\Asset\\bgm.mp3'),
+                        lambda : bgm_on_off(button_music),
                         canvas_Game,
                         "開",
                         33, 33,
@@ -95,6 +95,11 @@ button_music = txt_button(
                         "#00FF00",
                         "button_music"
                         )
+def press_m(event):
+    if event.char == 'm':
+        print("M 鍵被按下")
+        bgm_on_off(button_music)
+win.bind('<Key>', press_m)
 
 button_begin = img_button(
                         win ,
