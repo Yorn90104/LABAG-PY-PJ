@@ -2,15 +2,18 @@ from random import randint
 from LabaModule.Var import (
                         ram1, ram2, ram3,
                         p1, p2, p3, all_p,
-                        normal_acc,super_acc,
+                        normal_acc,
                         score, history_score, add,
                         ed, times,
-                        same1, same2, same3
+                        same1, same2, same3, picture
                         )
-from LabaModule.UI import  init , change_picture, result_txt 
+from LabaModule.UI import  init , update_pic, result_txt 
 from LabaModule.Sound import Ding , bgm_on_off
 
-from LabaModule.SuperHhh import super_ram, judge_super, super_times, switch_super_rate, three_super
+from LabaModule.Mod import (now_mod,
+                        super_ram,super_times,Super_init,
+                        judge_super,three_super, switch_rate,
+                        )
 
 # 主要邏輯流程：
 # 按鈕或鍵盤事件觸發 Begin 函數。
@@ -47,6 +50,27 @@ def change_rate(rate, y):
             return 'E'
       elif y <= rate[5] :
             return 'F'
+
+def PrizePIC(p):
+    """根據歸屬選擇圖 (歸屬)"""
+    if p == "A":
+        return picture[0]
+    elif p == "B":
+        return picture[1]
+    elif p == "C":
+        return picture[2]
+    elif p == "D":
+        return picture[3]
+    elif p == "E":
+        return picture[4]
+    elif p == "F":
+        return picture[5]
+
+def change_picture(CANVA , tg , p):
+    """哪個變圖 (畫面, 標籤, 歸屬)"""
+    new_pic = PrizePIC(p)
+    update_pic(CANVA, tg , new_pic)
+    Ding()
 
 def ADD(x, y, lst):
     """增加分數 (歸屬, 增加分數, 分數清單)"""
@@ -153,16 +177,18 @@ def game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_E
       print("切換Game畫面")
       frame_Game.pack(fill='both', expand=True)
 
-
 def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music) :
-      global ram1, ram2, ram3, p1, p2, p3, all_p,  score, add, ed, normal_acc, super_acc
+      global ram1, ram2, ram3, p1, p2, p3, all_p,  score, add, ed, normal_acc
 
       print(u"\n開始按鈕被點擊了！")
       super_times(win,canvas_Game)
       button_unable(win , button_begin)
 
-      init(canvas_Game, score, times , ed)
-      
+      mod = now_mod()
+      if mod == "Normal":
+            init(canvas_Game, score, times , ed)
+      elif mod == "SuperHHH":
+           Super_init(canvas_Game, score, times , ed)
 
       if ed  < times :
 
@@ -173,14 +199,14 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             
 
             #機率找歸屬
-            use_rate = switch_super_rate(normal_acc,super_acc)
+            use_rate = switch_rate(normal_acc)
             print(f"機率區間：{use_rate}")
             p1 = change_rate(use_rate, ram1)
             p2 = change_rate(use_rate, ram2)
             p3 = change_rate(use_rate, ram3)
             
             all_p = [p1, p2, p3]
-            judge_super(win, canvas_Game, all_p, button_music)
+            judge_super(win, canvas_Game, all_p)
 
             #每隔0.5秒改圖片
             win.after(500 , lambda : change_picture(canvas_Game , "LP" , p1))
@@ -203,10 +229,10 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
                 win.after(3500, lambda : game_over(frame_Game , frame_End , canvas_End, button_music))
                 
                 #若在超級阿禾模式則還原
-                judge_super(win, canvas_Game, all_p, button_music, False)
+                judge_super(win, canvas_Game, all_p, False)
 
                 
             else:
-                judge_super(win, canvas_Game, all_p, button_music)
+                judge_super(win, canvas_Game, all_p)
                 # 遊戲繼續
                 win.after(3500 , lambda : button_able(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music))

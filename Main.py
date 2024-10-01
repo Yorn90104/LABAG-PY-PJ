@@ -3,8 +3,6 @@ import sys
 sys.stdout.reconfigure(encoding='utf-8')
 
 import tkinter as tk
-import pygame
-
 
 # 主視窗
 win = tk.Tk()
@@ -99,7 +97,7 @@ def press_m(event):
     if event.char == 'm':
         print("M 鍵被按下")
         bgm_on_off(button_music)
-win.bind('<Key>', press_m)
+win.bind('<Key>', press_m) #綁定M鍵
 
 button_begin = img_button(
                         win ,

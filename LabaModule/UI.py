@@ -2,11 +2,8 @@ import tkinter as tk
 
 from LabaModule.Var import (
                             BG,
-                            QST, SuperQST,
-                            picture,
-                            SuperHHH
+                            QST
                             )
-from LabaModule.Sound import Ding
 
 def setup_frame(win, tg=""):
     """設置畫面"""
@@ -34,27 +31,6 @@ def init(CANVA, score, times, ed):
     CANVA.itemconfig("Add", text=f"")
     CANVA.itemconfig("Score", text= f"目前分數：{score}")
     CANVA.itemconfig("Times", text= f"剩餘次數：{times - ed}")
-
-def PrizePIC(p):
-    """根據歸屬選擇圖 (歸屬)"""
-    if p == "A":
-        return picture[0]
-    elif p == "B":
-        return picture[1]
-    elif p == "C":
-        return picture[2]
-    elif p == "D":
-        return picture[3]
-    elif p == "E":
-        return picture[4]
-    elif p == "F":
-        return picture[5]
-
-def change_picture(CANVA , tg , p):
-    """哪個變圖 (畫面, 標籤, 歸屬)"""
-    new_pic = PrizePIC(p)
-    update_pic(CANVA, tg , new_pic)
-    Ding()
 
 def img_button(win , CMD , CANVA , img, x = 0, y = 0, rel = "raised", highlight = 1):
     """添加按鈕(視窗,執行動作,畫面,水平位置,垂直位置,三圍邊框效果,)"""

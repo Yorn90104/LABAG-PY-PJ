@@ -19,9 +19,16 @@ def stop_music() :
     """停止當前音樂"""
     mixer.music.stop()
 
-def bgm_on_off(button_music, file = '.\\Asset\\bgm.mp3', game_running = True) :
+def bgm_on_off(button_music, game_running = True) :
     """音樂開關"""
+    from LabaModule.Mod import now_mod
     global bgm_playing
+    mod = now_mod()
+    if mod == "Normal":
+        file = '.\\Asset\\bgm.mp3'
+    elif mod == "SuperHHH":
+        file = '.\\Asset\\SuperMusic.mp3'
+    
     #關
     if bgm_playing or game_running == False :
         stop_music()
@@ -47,3 +54,4 @@ def switch_music(file ,game_running = True) :
         stop_music()
         if game_running :
             play_music(file)
+
