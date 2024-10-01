@@ -106,7 +106,7 @@ def judge_super(win, canvas_Game, all_p, game_running = True):
             if any(x == "B" for x in all_p):
                 hhh_appear = True
 
-            if SuperRam <= 100 and hhh_appear :#超級阿禾出現的機率
+            if SuperRam <= 15 and hhh_appear :#超級阿禾出現的機率
                 SuperHHH = True
                 SuperTimes = 6
                 win.after(2800 , lambda : change_hhh(canvas_Game,all_p))
