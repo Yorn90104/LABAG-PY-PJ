@@ -67,6 +67,7 @@ def super_screen(win,canvas_Game :tk.Canvas, game_running = True):
     global SuperHHH, SuperTimes
     if SuperHHH :
         super_pop = img_button(win, lambda: delete_button(super_pop), canvas_Game, SuperPOP, 225 , 400, "flat", 0)
+        print("超級阿禾出現了！")
         canvas_Game.itemconfig("BG", image = SuperBG)
         canvas_Game.itemconfig("Title", image = SuperTitle)
         canvas_Game.itemconfig("mod_1", text = f"超級阿禾剩餘次數:{SuperTimes}次", fill = "#FF00FF")
@@ -105,7 +106,7 @@ def judge_super(win, canvas_Game, all_p, game_running = True):
             if any(x == "B" for x in all_p):
                 hhh_appear = True
 
-            if SuperRam <= 15 and hhh_appear :#超級阿禾出現的機率
+            if SuperRam <= 100 and hhh_appear :#超級阿禾出現的機率
                 SuperHHH = True
                 SuperTimes = 6
                 win.after(2800 , lambda : change_hhh(canvas_Game,all_p))

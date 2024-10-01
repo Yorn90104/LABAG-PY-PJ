@@ -35,17 +35,10 @@ same1 = [30, 50, 250, 290, 1200, 2500]
 
 def poccess_image(file, w, h):
     """處理成TK可識別的圖 (路徑, 長, 寬)"""
-    pc = Image.open(file)
+    pc = Image.open(file).convert("RGBA")
     pc = pc.resize((w , h) , Image.LANCZOS)  # 調整圖片大小
     pic = ImageTk.PhotoImage(pc)
     return pic
-
-L_pic = None
-M_pic = None
-R_pic = None
-text_add = None
-text_score = None
-text_times = None
 
 BG = poccess_image('.\\Asset\\BG.png' , 450 , 800)
 Title = poccess_image('.\\Asset\\Title.png' , 450 , 253)
@@ -72,12 +65,15 @@ SuperHHH = False
 SuperRam = 0
 SuperTimes = 0
 
+SuperCircle = poccess_image('.\\Asset\\SuperCircle.png' , 400 , 400)
+
 SuperBG = poccess_image('.\\Asset\\SuperBG.png' , 450 , 800)
 SuperTitle = poccess_image('.\\Asset\\SuperTitle.png' , 450 , 253)
 SuperQST = poccess_image('.\\Asset\\SuperQST.png' , 150 , 200)
 SuperPOP = poccess_image('.\\Asset\\SuperPOP.png' , 450 , 800)
 
 super_hhh = poccess_image('.\\Asset\\super_hhh.jpg' , 150 , 200)
+
 
 #endregion
 

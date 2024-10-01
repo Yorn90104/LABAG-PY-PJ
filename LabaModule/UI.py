@@ -15,9 +15,8 @@ def setup_frame(win, tg=""):
 
 def load_pic(CANVA, pc, x = 0, y = 0 , tg = ""):
     """加載新的圖片並放在CANVA上 (畫面 , 照片, 水平座標, 垂直座標, 標記)"""
-    pic = CANVA.create_image(x, y, image = pc, anchor = "nw" , tag = tg)
-    return pic
-
+    CANVA.create_image(x, y, image = pc, anchor = "nw" , tag = tg)
+   
 def update_pic(CANVA , tg ,  pc) :
     """更新CANVA上的圖片 (畫面, 標記, 圖)"""
     CANVA.itemconfig(tg , image = pc)
@@ -64,7 +63,7 @@ def txt_button(win , CMD , CANVA, txt, w, h, x = 0, y = 0, size = 12, font_color
 
 def Text(CANVA , x , y , txt , size = 12 , color = "white" , tg = "", align = "center"):
     """添加粗體文字(畫面,水平位置,垂直位置,大小,顏色,標記,對齊方式[東南西北])"""
-    txt = CANVA.create_text(
+    CANVA.create_text(
                             x,
                             y,
                             text = txt ,
@@ -73,8 +72,7 @@ def Text(CANVA , x , y , txt , size = 12 , color = "white" , tg = "", align = "c
                             tag = tg,
                             anchor = align
                             )
-    return txt
-
+    
 def result_txt(CANVA , score, add, ed, times):
     """顯示結果文字"""
     CANVA.itemconfig("Add", text= f"+{add}")

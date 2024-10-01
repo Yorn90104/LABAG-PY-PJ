@@ -29,7 +29,7 @@ def result(canvas_Game):
       global score, add, ed, all_p
       ed += 1
       score += add
-      print(f"第{ed}次")
+      print(f"\n第{ed}次")
       print(f' | {all_p[0]} | {all_p[1]} | {all_p[2]} |')
       print(f"+{add}")
       print(f"目前分數：{score}")

@@ -1,4 +1,11 @@
 #需先下載 Pillow 和 Pygame (pip install ******)
+
+# main.py：主程序，負責設定遊戲視窗，設置圖片、按鈕，及整合各模組。
+# Var.py：包含所有變量、圖片處理邏輯、機率和分數的配置。
+# UI.py：用來設置 tkinter 視窗中的 UI 元素（如按鈕、文字、圖片等）。
+# Sound.py：負責聲音效果和音樂控制的模組。
+# SuperHhh.py：處理超級阿禾模式的邏輯和特效。
+# Logic.py：負責遊戲的核心邏輯，包括圖片隨機選擇、分數計算及更新遊戲畫面。
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -13,20 +20,40 @@ win.resizable(False, False)
 
 
 from LabaModule.UI import setup_frame ,  load_pic , Text, img_button ,txt_button
-from LabaModule.Var import score, history_score, times, ed, Title, QST, BeginPIC, AgainPIC, SB,  L_pic, M_pic, R_pic, text_add, text_score, text_times
+from LabaModule.Var import (
+                            score, history_score,
+                            times, ed,
+                            Title, QST, BeginPIC, AgainPIC, SB, SuperCircle,
+                            )
 from LabaModule.Logic import Begin, game_again
 
-#建立 GAME & END 畫面
+#建立 HOME & GAME & END 畫面
+frame_Home, canvas_Home =setup_frame(win)
 frame_Game, canvas_Game = setup_frame(win, "BG")
 frame_End, canvas_End =setup_frame(win)
+
+#region HOME畫面
+def into_game(win):
+    """進入遊戲"""
+    frame_Home.pack_forget()
+    frame_Game.pack(fill='both', expand=True)
+    win.unbind('<Return>')
+
+pic_into = load_pic(canvas_Home, SuperCircle, 25, 130, "into")
+canvas_Home.tag_bind("into", "<Button-1>", lambda event: into_game(win))
+
+win.bind('<Return>', lambda event :into_game(win))
+text_click = Text(canvas_Home, 225, 570, "點擊上方圖片(或 ENTER )\n       進入遊戲 >>>>>", 20, "#00FFFF", "click" )
+
+#endregion
 
 #region GAME畫面
 
 pic_title = load_pic(canvas_Game , Title , 0 , 25 , "Title")
 
-L_pic = load_pic(canvas_Game , QST, 0, 250 , "LP")
-M_pic = load_pic(canvas_Game , QST, 150, 250 , "MP")
-R_pic = load_pic(canvas_Game , QST, 300, 250 , "RP")
+load_pic(canvas_Game , QST, 0, 250 , "LP")
+load_pic(canvas_Game , QST, 150, 250 , "MP")
+load_pic(canvas_Game , QST, 300, 250 , "RP")
 
 text_add = Text(
                 canvas_Game ,
@@ -147,7 +174,7 @@ button_again = img_button(
 pic_SB = load_pic(canvas_End , SB, 0, 500, "SB")
 #endregion
 
-frame_Game.pack(fill='both', expand=True)
+frame_Home.pack(fill='both', expand=True)
 
 from LabaModule.Sound import bgm_on_off
 bgm_on_off(button_music)
