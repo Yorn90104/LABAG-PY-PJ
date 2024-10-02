@@ -9,7 +9,7 @@ from LabaModule.Var import (Name,
                         )
 from LabaModule.UI import  init , update_pic, result_txt 
 from LabaModule.Sound import Ding , bgm_on_off
-from LabaModule.url import commit_score
+from LabaModule.sheet import commit_score, find_history_score
 
 from LabaModule.Mod import (now_mod,
                         super_ram,super_times,Super_init,
@@ -176,6 +176,7 @@ def game_start(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_E
 
       init(canvas_Game, score, times , ed)
       bgm_on_off(button_music)
+      history_score = find_history_score(Name)
       canvas_Game.itemconfig("history_score", text=f"歷史最高分數：{history_score}" ) 
       button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music)
       Frame.pack_forget()

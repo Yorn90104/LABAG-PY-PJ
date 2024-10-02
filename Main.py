@@ -1,4 +1,4 @@
-#需先下載 Pillow 和 Pygame (pip install ******)
+#需先下載 Pillow & Pygame & requests (pip install ******)
 
 # main.py：主程序，負責設定遊戲視窗，設置圖片、按鈕，及整合各模組。
 # Var.py：包含所有變量、圖片處理邏輯、機率和分數的配置。
@@ -26,6 +26,8 @@ from LabaModule.Var import (Name,
                             Title, QST,back, BeginPIC, AgainPIC, SB, SuperCircle,
                             )
 from LabaModule.Logic import Begin, game_start
+from LabaModule.sheet import get_data
+get_data()
 
 #建立 HOME & GAME & END 畫面
 frame_Home, canvas_Home =setup_frame(win)
@@ -153,6 +155,8 @@ text_mod2 = Text(
 
 def back_home():
     """返回首頁"""
+    global Name
+    Name = "" #debug 重置名稱
     frame_Game.pack_forget()
     bgm_on_off(button_music,False)
     frame_Home.pack(fill='both', expand=True)
