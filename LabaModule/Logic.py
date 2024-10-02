@@ -3,7 +3,7 @@ from LabaModule.Var import (Name,
                         ram1, ram2, ram3,
                         p1, p2, p3, all_p,
                         normal_acc,
-                        score, history_score, add,
+                        score, history_score, add,all_score,
                         ed, times,
                         same1, same2, same3, picture
                         )
@@ -146,9 +146,9 @@ def button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_
 
 def history_score_txt(canvas_End):
       global score, history_score
-      if score > history_score :
-            history_score = score
-            canvas_End.itemconfig("HS", text=f"歷史最高分數：{history_score}" ) 
+      all_score.append(score)
+      history_score = max(all_score)
+      canvas_End.itemconfig("HS", text=f"歷史最高分數：{history_score}" ) 
 
 def game_over(frame_Game, frame_End, canvas_End, button_music):
       global Name, score, history_score, times, ed

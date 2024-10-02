@@ -3,9 +3,10 @@ from PIL import Image, ImageTk
 Name = ""
 
 # 遊戲邏輯變數
-times = 30 #可遊玩次數
+times = 3 #可遊玩次數
 ed = 0
 score, add= 0, 0
+all_score = [0]
 history_score = 0
 
 #遊戲後臺變數
