@@ -39,8 +39,10 @@ def into_game(win):
     Name = get_input(input_name)
     if Name != "" :
         canvas_Game.itemconfig("Name", text =  f"玩家名：{Name}")
+        print(f"玩家名：{Name}")
     else :
         canvas_Game.itemconfig("Name", text =  "")
+        print(f"玩家名：無")
 
     game_start(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music, frame_Home, Name)
     win.unbind('<Return>')

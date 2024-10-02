@@ -9,6 +9,7 @@ from LabaModule.Var import (Name,
                         )
 from LabaModule.UI import  init , update_pic, result_txt 
 from LabaModule.Sound import Ding , bgm_on_off
+from LabaModule.url import commit_score
 
 from LabaModule.Mod import (now_mod,
                         super_ram,super_times,Super_init,
@@ -150,9 +151,10 @@ def history_score_txt(canvas_End):
             canvas_End.itemconfig("HS", text=f"歷史最高分數：{history_score}" ) 
 
 def game_over(frame_Game, frame_End, canvas_End, button_music):
-      global score, history_score, times, ed 
-      print("遊戲已結束")
-      print(f"最終分數為：{score}")
+      global Name, score, history_score, times, ed
+      print("")
+      print(f"遊戲已結束，最終分數為：{score}。")
+      commit_score(Name,score)
       bgm_on_off(button_music, game_running = False)
       """遊戲結束，切換到結果頁面"""
       frame_Game.pack_forget()  # 隱藏遊戲畫面
