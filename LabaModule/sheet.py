@@ -42,8 +42,13 @@ def get_data():
     tide_data()
 
 def find_history_score(name = ""):
+        """找歷史分數資料"""
         global data_dict
         if name != "" :
-            return data_dict[name]
+            if name in data_dict: #檢查是否已在字典裡
+                return data_dict[name]
+            else : #沒有就新增一個
+                data_dict[name] = 0
+                return data_dict[name]
         else:
             return 0

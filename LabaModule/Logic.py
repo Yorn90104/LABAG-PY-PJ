@@ -144,7 +144,7 @@ def button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_
       win.bind('<space>', lambda event: Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music))
       button_begin.config(state='normal')
 
-def history_score_txt(canvas_End):
+def end_history_score(canvas_End):
       global score, history_score
       all_score.append(score)
       history_score = max(all_score)
@@ -163,7 +163,7 @@ def game_over(frame_Game, frame_End, canvas_End, button_music):
       canvas_End.itemconfig("Name", text =  f"{Name}")
       canvas_End.itemconfig("over", text="遊戲結束！") 
       canvas_End.itemconfig("final_score", text=f"最終分數：{score}")  # 最終分數顯示
-      history_score_txt(canvas_End) #歷史分數更新
+      end_history_score(canvas_End) #歷史分數更新
       Ding()
 
 def game_start(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music, Frame, name= "") :
@@ -176,8 +176,11 @@ def game_start(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_E
 
       init(canvas_Game, score, times , ed)
       bgm_on_off(button_music)
-      history_score = find_history_score(Name)
+      #更新歷史分數
+      all_score.append(find_history_score(Name))
+      history_score = max(all_score)
       canvas_Game.itemconfig("history_score", text=f"歷史最高分數：{history_score}" ) 
+
       button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music)
       Frame.pack_forget()
       print("切換Game畫面")

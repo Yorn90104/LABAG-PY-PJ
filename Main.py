@@ -19,7 +19,7 @@ win.geometry("450x800")
 win.resizable(False, False)
 
 
-from LabaModule.UI import setup_frame ,  load_pic , Text, img_button ,txt_button, input_box, get_input
+from LabaModule.UI import setup_frame ,  load_pic , Text, img_button ,txt_button, input_box, get_input, reset_input_box
 from LabaModule.Var import (Name,
                             score, history_score,
                             times, ed,
@@ -48,6 +48,7 @@ def into_game(win):
 
     game_start(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music, frame_Home, Name)
     win.unbind('<Return>')
+    win.bind('<space>', lambda event :Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music))# 綁定 space 鍵
     print("進入遊戲")
 
 text_fanyu = Text(
@@ -156,10 +157,11 @@ text_mod2 = Text(
 def back_home():
     """返回首頁"""
     global Name
-    Name = "" #debug 重置名稱
+    reset_input_box(input_name, Name)
     frame_Game.pack_forget()
     bgm_on_off(button_music,False)
     frame_Home.pack(fill='both', expand=True)
+    win.unbind('<space>')  # 取消space鍵的綁定
     win.bind('<Return>', lambda event :into_game(win))
     print("返回首頁")
     
@@ -196,7 +198,6 @@ button_begin = img_button(
                         BeginPIC,
                         225, 575
                         )
-win.bind('<space>', lambda event :Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music))# 綁定 space 鍵
 
 #endregion
 

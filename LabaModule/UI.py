@@ -92,4 +92,10 @@ def input_box(win, CANVA ,txt ="", x = 0, y = 0, size = 16, Width = 12) :
 
 def get_input(box = tk.Entry):
     user_input = box.get()
-    return user_input
+    text = user_input.strip()
+    return text
+
+def reset_input_box(text_box, txt = ""):
+    text_box.delete(0, "end")
+    text_box.insert(0, txt)
+    print("重新載入稱呼")
