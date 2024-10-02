@@ -1,5 +1,5 @@
 from random import randint
-from LabaModule.Var import (
+from LabaModule.Var import (Name,
                         ram1, ram2, ram3,
                         p1, p2, p3, all_p,
                         normal_acc,
@@ -158,13 +158,16 @@ def game_over(frame_Game, frame_End, canvas_End, button_music):
       frame_Game.pack_forget()  # 隱藏遊戲畫面
       print("切換End畫面")
       frame_End.pack(fill='both', expand=True)  # 顯示遊戲結束畫面
+      canvas_End.itemconfig("Name", text =  f"{Name}")
       canvas_End.itemconfig("over", text="遊戲結束！") 
       canvas_End.itemconfig("final_score", text=f"最終分數：{score}")  # 最終分數顯示
       history_score_txt(canvas_End) #歷史分數更新
       Ding()
 
-def game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music) :
-      global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed  , times, history_score
+def game_start(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music, Frame, name= "") :
+      """遊戲開始，最後一個FRAME要指定"""
+      global ram1 , ram2 , ram3 , p1 , p2 , p3 , score , add , ed  , times, history_score, Name
+      Name = name
       ram1, ram2, ram3 = 0 , 0 , 0
       p1, p2, p3 = '', '', ''
       score, add, ed = 0 , 0 , 0
@@ -173,7 +176,7 @@ def game_again(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_E
       bgm_on_off(button_music)
       canvas_Game.itemconfig("history_score", text=f"歷史最高分數：{history_score}" ) 
       button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music)
-      frame_End.pack_forget()
+      Frame.pack_forget()
       print("切換Game畫面")
       frame_Game.pack(fill='both', expand=True)
 

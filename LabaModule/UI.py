@@ -83,4 +83,13 @@ def delete_button(btn):
     """删除按钮"""
     btn.destroy()
 
+def input_box(win, CANVA ,txt ="", x = 0, y = 0, size = 16, Width = 12) :
+    """文字輸入盒(視窗,畫面,提示文字,水平座標,垂直座標,文字大小,寬度)"""
+    entry = tk.Entry(win, width = Width, font=("Arial", size))
+    entry.insert(0, txt) 
+    CANVA.create_window(x, y, window = entry)
+    return entry
 
+def get_input(box = tk.Entry):
+    user_input = box.get()
+    return user_input

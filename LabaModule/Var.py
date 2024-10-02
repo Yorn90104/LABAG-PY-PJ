@@ -1,5 +1,7 @@
 from PIL import Image, ImageTk
 
+Name = ""
+
 # 遊戲邏輯變數
 times = 30 #可遊玩次數
 ed = 0
@@ -44,6 +46,7 @@ BG = poccess_image('.\\Asset\\BG.png' , 450 , 800)
 Title = poccess_image('.\\Asset\\Title.png' , 450 , 253)
 QST = poccess_image('.\\Asset\\QST.jpg' , 150 , 200)  # ?
 SB = poccess_image('.\\Asset\\SB.png' , 450 , 169) #記分板
+back = poccess_image('.\\Asset\\back.png' , 30 , 30) #返回
 
 BeginPIC = poccess_image('.\\Asset\\BeginPIC.jpg' , 150 , 50)
 AgainPIC = poccess_image('.\\Asset\\AgainPIC.jpg' , 150 , 50)

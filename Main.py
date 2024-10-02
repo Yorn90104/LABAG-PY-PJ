@@ -19,13 +19,13 @@ win.geometry("450x800")
 win.resizable(False, False)
 
 
-from LabaModule.UI import setup_frame ,  load_pic , Text, img_button ,txt_button
-from LabaModule.Var import (
+from LabaModule.UI import setup_frame ,  load_pic , Text, img_button ,txt_button, input_box, get_input
+from LabaModule.Var import (Name,
                             score, history_score,
                             times, ed,
-                            Title, QST, BeginPIC, AgainPIC, SB, SuperCircle,
+                            Title, QST,back, BeginPIC, AgainPIC, SB, SuperCircle,
                             )
-from LabaModule.Logic import Begin, game_again
+from LabaModule.Logic import Begin, game_start
 
 #建立 HOME & GAME & END 畫面
 frame_Home, canvas_Home =setup_frame(win)
@@ -35,16 +35,48 @@ frame_End, canvas_End =setup_frame(win)
 #region HOME畫面
 def into_game(win):
     """進入遊戲"""
-    frame_Home.pack_forget()
-    frame_Game.pack(fill='both', expand=True)
+    global Name
+    Name = get_input(input_name)
+    if Name != "" :
+        canvas_Game.itemconfig("Name", text =  f"玩家名：{Name}")
+    else :
+        canvas_Game.itemconfig("Name", text =  "")
+
+    game_start(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music, frame_Home, Name)
     win.unbind('<Return>')
+    print("進入遊戲")
+
+text_fanyu = Text(
+                canvas_Home,
+                225, 100,
+                "作者IG：fan._.yuuu",
+                30,
+                "#00FFFF",
+                "fanyu"
+                )
 
 pic_into = load_pic(canvas_Home, SuperCircle, 25, 130, "into")
 canvas_Home.tag_bind("into", "<Button-1>", lambda event: into_game(win))
 
 win.bind('<Return>', lambda event :into_game(win))
-text_click = Text(canvas_Home, 225, 570, "點擊上方圖片(或 ENTER )\n       進入遊戲 >>>>>", 20, "#00FFFF", "click" )
+text_click = Text(
+                canvas_Home,
+                225, 550,
+                "點擊上方圖片(或 ENTER )\n       進入遊戲 >>>>>",
+                15,
+                "#FFFFAA",
+                "click" 
+                )
 
+input_name = input_box(win, canvas_Home, "", 225, 600, 18, 15)
+text_hint = Text(
+                canvas_Home,
+                225, 625,
+                "輸入你的稱呼",
+                12,
+                "white",
+                "hint"
+                )
 #endregion
 
 #region GAME畫面
@@ -55,6 +87,15 @@ load_pic(canvas_Game , QST, 0, 250 , "LP")
 load_pic(canvas_Game , QST, 150, 250 , "MP")
 load_pic(canvas_Game , QST, 300, 250 , "RP")
 
+text_name_Game = Text(
+                canvas_Game,
+                5, 50,
+                "",
+                15,
+                "white",
+                "Name",
+                "w"
+                )
 text_add = Text(
                 canvas_Game ,
                 225 , 478 ,
@@ -108,16 +149,32 @@ text_mod2 = Text(
                 )
 #endregion
 
+def back_home():
+    """返回首頁"""
+    frame_Game.pack_forget()
+    bgm_on_off(button_music,False)
+    frame_Home.pack(fill='both', expand=True)
+    win.bind('<Return>', lambda event :into_game(win))
+    print("返回首頁")
+    
+button_back = img_button(
+                        win,
+                        back_home,
+                        canvas_Game,
+                        back,
+                        18, 18
+                        )
+
 button_music = txt_button(
                         win,
                         lambda : bgm_on_off(button_music),
                         canvas_Game,
-                        "開",
+                        "關",
                         33, 33,
                         415, 765,
                         14,
                         "black",
-                        "#00FF00",
+                        "#C0C0C0",
                         "button_music"
                         )
 def press_m(event):
@@ -138,7 +195,14 @@ win.bind('<space>', lambda event :Begin(win , canvas_Game , button_begin, frame_
 #endregion
 
 #region END畫面
-
+text_name_End = Text(
+                canvas_End,
+                225, 175,
+                "",
+                22,
+                "skyblue",
+                "Name",
+                )
 text_over = Text(
                 canvas_End ,
                 225 , 260 ,
@@ -166,8 +230,9 @@ text_HS = Text(
 
 button_again = img_button(
                         win,
-                        lambda: game_again(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music),
-                        canvas_End, AgainPIC,
+                        lambda: game_start(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music, frame_End, Name),
+                        canvas_End,
+                        AgainPIC,
                         225, 400
                         )
 
@@ -177,6 +242,5 @@ pic_SB = load_pic(canvas_End , SB, 0, 500, "SB")
 frame_Home.pack(fill='both', expand=True)
 
 from LabaModule.Sound import bgm_on_off
-bgm_on_off(button_music)
 
 win.mainloop()
