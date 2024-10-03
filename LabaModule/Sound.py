@@ -28,6 +28,8 @@ def bgm_on_off(button_music, game_running = True) :
         file = '.\\Asset\\bgm.mp3'
     elif mod == "SuperHHH":
         file = '.\\Asset\\SuperMusic.mp3'
+    elif mod == "GreenWei":
+        file = '.\\Asset\\GreenMusic.mp3'
     
     #關
     if bgm_playing or game_running == False :
@@ -54,4 +56,10 @@ def switch_music(file ,game_running = True) :
         stop_music()
         if game_running :
             play_music(file)
+
+def green_up():
+    """播放阿瑋升級音效"""
+    gre = mixer.Sound('.\\Asset\\GreenUP.mp3')  # 加載音效文件
+    gre.set_volume(0.3)
+    gre.play()  # 播放音效
 

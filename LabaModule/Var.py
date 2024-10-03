@@ -1,9 +1,13 @@
 from PIL import Image, ImageTk
 
 Name = ""
+#試算表 sheet
+GetData = []
+
+data_dict = {}
 
 # 遊戲邏輯變數
-times = 30 #可遊玩次數
+times = 30 #可遊玩次數 正常30
 ed = 0
 score, add= 0, 0
 all_score = [0]
@@ -23,7 +27,7 @@ def acc_rate(original_rate):
         result_rate.append(acc)
     return result_rate
 
-normal_rate = [36, 24, 17, 12, 8, 3]
+normal_rate = [60, 40, 0, 0, 0, 0]
 normal_acc = acc_rate(normal_rate)
 
 super_rate = [19, 5, 19, 19, 19, 19]
@@ -64,8 +68,10 @@ picture = [gss , hhh , hentai , handsun , kachu , rrr]
 bgm_playing = False
 
 #region 超級阿禾區
+SuperRate = 15 #正常 15
 
 SuperHHH = False
+SuperFirst = False
 SuperRam = 0
 SuperTimes = 0
 
@@ -81,7 +87,23 @@ super_hhh = poccess_image('.\\Asset\\super_hhh.jpg' , 150 , 200)
 
 #endregion
 
-#試算表
-GetData = []
+#region 綠光阿瑋區
+GreenRate = 35 #正常 35
 
-data_dict = {}
+GreenWei = False
+GreenFirst = False
+GreenRam = 0
+GreenTimes = 0
+
+GreenBG = poccess_image('.\\Asset\\GreenBG.png' , 450 , 800)
+GreenTitle = poccess_image('.\\Asset\\GreenTitle.png' , 450 , 253)
+GreenQST = poccess_image('.\\Asset\\GreenQST.png' , 150 , 200)
+GreenPOP = poccess_image('.\\Asset\\GreenPOP.png' , 450 , 800)
+
+GreenLeft = poccess_image('.\\Asset\\GreenLeft.jpg' , 150 , 200)
+GreenMid = poccess_image('.\\Asset\\GreenMid.jpg' , 150 , 200)
+GreenRight = poccess_image('.\\Asset\\GreenRight.jpg' , 150 , 200)
+
+green_wei = poccess_image('.\\Asset\\green_wei.jpg' , 150 , 200)
+
+#endregion

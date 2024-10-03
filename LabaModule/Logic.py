@@ -12,8 +12,12 @@ from LabaModule.Sound import Ding , bgm_on_off
 from LabaModule.sheet import commit_score, find_history_score
 
 from LabaModule.Mod import (now_mod,
+                            
                         super_ram,super_times,Super_init,
                         judge_super,three_super, switch_rate,
+
+                        green_ram, green_times, Green_init,
+                        judge_green, green_triple
                         )
 
 # 主要邏輯流程：
@@ -191,6 +195,8 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
 
       print(u"\n開始按鈕被點擊了！")
       super_times(win,canvas_Game)
+      green_times(win, canvas_Game)
+
       button_unable(win , button_begin)
 
       mod = now_mod()
@@ -198,6 +204,8 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             init(canvas_Game, score, times , ed)
       elif mod == "SuperHHH":
            Super_init(canvas_Game, score, times , ed)
+      elif mod == "GreenWei":
+           Green_init(canvas_Game, score, times , ed)
 
       if ed  < times :
 
@@ -205,6 +213,7 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             ram1 , ram2 , ram3 = randint(1,100) , randint(1,100) , randint(1,100)
             print(f"圖片隨機數為：{ram1} | {ram2} | {ram3}")
             super_ram()
+            green_ram()
             
 
             #機率找歸屬
@@ -216,6 +225,7 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             
             all_p = [p1, p2, p3]
             judge_super(win, canvas_Game, all_p)
+            judge_green(win, canvas_Game, all_p)
 
             #每隔0.5秒改圖片
             win.after(500 , lambda : change_picture(canvas_Game , "LP" , p1))
@@ -226,6 +236,7 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
 
             add = calculate_score(p1 , p2 , p3 , add)
             add = three_super(win, canvas_Game, all_p, score, add)
+            add = green_triple(add)
             
             win.after(3000 , lambda : result(canvas_Game))
 
@@ -237,11 +248,11 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
                 # 切換到結束畫面
                 win.after(3500, lambda : game_over(frame_Game , frame_End , canvas_End, button_music))
                 
-                #若在超級阿禾模式則還原
+                #若在特殊模式則還原
                 judge_super(win, canvas_Game, all_p, False)
+                judge_green(win, canvas_Game, all_p, False)
 
                 
             else:
-                judge_super(win, canvas_Game, all_p)
                 # 遊戲繼續
                 win.after(3500 , lambda : button_able(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music))
