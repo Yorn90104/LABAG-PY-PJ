@@ -17,7 +17,7 @@ from LabaModule.Mod import (now_mod,
                         judge_super,three_super, switch_rate,
 
                         green_ram, green_times, Green_init,
-                        judge_green, green_triple
+                        judge_green, switch_times
                         )
 
 # 主要邏輯流程：
@@ -225,7 +225,7 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             
             all_p = [p1, p2, p3]
             judge_super(win, canvas_Game, all_p)
-            judge_green(win, canvas_Game, all_p)
+            
 
             #每隔0.5秒改圖片
             win.after(500 , lambda : change_picture(canvas_Game , "LP" , p1))
@@ -233,10 +233,11 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             win.after(1500 , lambda : change_picture(canvas_Game , "RP" , p3))
 
             #增加分數
-
+            use_times = switch_times()
+            judge_green(win, canvas_Game, all_p)
             add = calculate_score(p1 , p2 , p3 , add)
             add = three_super(win, canvas_Game, all_p, score, add)
-            add = green_triple(add)
+            add *= use_times            
             
             win.after(3000 , lambda : result(canvas_Game))
 

@@ -21,18 +21,26 @@ win.resizable(False, False)
 
 from LabaModule.UI import setup_frame ,  load_pic , Text, img_button ,txt_button, input_box, get_input, reset_input_box
 from LabaModule.Var import (Name,
-                            score, history_score,
+                            score, history_score,all_p,
                             times, ed,
-                            Title, QST,back, BeginPIC, AgainPIC, SB, SuperCircle,
+                            BG, Title, QST,back, BeginPIC, AgainPIC, SB, SuperCircle,
                             )
 from LabaModule.Logic import Begin, game_start
 from LabaModule.sheet import get_data
+from LabaModule.Mod import SuperFalse, GreenFalse
 get_data()
 
 #建立 HOME & GAME & END 畫面
 frame_Home, canvas_Home =setup_frame(win)
 frame_Game, canvas_Game = setup_frame(win, "BG")
 frame_End, canvas_End =setup_frame(win)
+
+def reset_game():
+        SuperFalse()
+        GreenFalse()
+        canvas_Game.itemconfig("BG", image = BG)
+        canvas_Game.itemconfig("Title", image = Title)
+        canvas_Game.itemconfig("mod_1", text = "")
 
 #region HOME畫面
 def into_game(win):
@@ -163,6 +171,9 @@ def back_home():
     frame_Home.pack(fill='both', expand=True)
     win.unbind('<space>')  # 取消space鍵的綁定
     win.bind('<Return>', lambda event :into_game(win))
+    
+    reset_game()
+
     print("返回首頁")
     
 button_back = img_button(

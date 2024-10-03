@@ -30,6 +30,7 @@ def init(CANVA, score, times, ed):
     CANVA.itemconfig("Add", text=f"")
     CANVA.itemconfig("Score", text= f"目前分數：{score}")
     CANVA.itemconfig("Times", text= f"剩餘次數：{times - ed}")
+    CANVA.itemconfig("mod_2", text = f"")
 
 def img_button(win , CMD , CANVA , img, x = 0, y = 0, rel = "raised", highlight = 1):
     """添加按鈕(視窗,執行動作,畫面,水平位置,垂直位置,三圍邊框效果,)"""

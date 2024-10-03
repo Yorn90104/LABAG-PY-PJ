@@ -12,6 +12,7 @@ game_running = True
 
 ram1 , ram2 , ram3 = 0 , 0 , 0
 SuperRam = 0
+GreenRam = 0
 
 p1 , p2 , p3 = '' , '' , ''
 all_p = []
@@ -23,7 +24,13 @@ ed = 0
 
 SuperTimes = 0
 SuperHHH = False
+SuperFirst = False
 superS = 0
+
+GreenTimes = 0
+GreenWei = False
+GreenFirst = False
+greenS = 0
 
 #機率
 def acc_rate(original_rate):
@@ -47,10 +54,12 @@ same1 = [30 , 50 , 250 , 290 , 1200 , 2500]
 
 #endregion
 def now_mod(): #現在模式
-    global SuperHHH
+    global SuperHHH, GreenWei
     mod = ""
     if SuperHHH :
         mod = "SuperHHH"
+    elif GreenWei :
+        mod = "GreenWei"
     else :
         mod = "Normal"
     
@@ -58,8 +67,9 @@ def now_mod(): #現在模式
 
 #region 超級阿禾區
 def super_times(Times) :
-      global SuperHHH
+      global SuperHHH, SuperFirst
       if SuperHHH :
+            SuperFirst = False
             Times -= 1
       return Times
 
@@ -68,21 +78,25 @@ def super_ram(SuperRam):
     SuperRam = randint(1,100)
     return SuperRam
 
-def judge_super(all_p, game_running = True):
+def judge_super(all_p, game_running = True, ModEnd = False):
       """判斷超級阿禾"""
-      global SuperRam, SuperHHH, SuperTimes, superS
+      global SuperRam, SuperHHH, SuperTimes, SuperFirst, superS
       if game_running :#遊戲進行
             mod = now_mod()
             if mod == "SuperHHH" : #正處於超級阿禾狀態
+                  if all(x == "B" for x in all_p):
+                        SuperTimes += 2
                   if SuperTimes <= 0 : #超級阿禾次數用完
                         SuperHHH = False
-            elif mod == "Normal" : #未處於超級阿禾狀態
+                        judge_super(all_p, ModEnd = True)
+            elif mod == "Normal" or ModEnd : #未處於超級阿禾狀態
                   hhh_appear = False
                   #判斷是否有出現阿和
                   if any(x == "B" for x in all_p):
                         hhh_appear = True
                   if SuperRam <= 15 and hhh_appear :#超級阿禾出現的機率
                         SuperHHH = True
+                        SuperFirst = True
                         superS += 1
                         SuperTimes = 6
       else :
@@ -96,17 +110,18 @@ def switch_rate(normal_acc):
         return super_acc
     elif mod == "Normal" :
         return normal_acc
+    
 def super_double(all_SB, score, add):
-    """超級阿禾加倍 獲得當前分數0.5倍的分數"""
-    if all_SB :
-        double_score = int(round(score / 2))
-        add += double_score
-        return add
+      """超級阿禾加倍 獲得當前分數0.5倍的分數"""
+      if all_SB :
+            double_score = int(round(score / 2))
+            add += double_score
+            return add
 
 def three_super(all_p, score, add):
-    global SuperHHH, SuperTimes
+    global SuperHHH, SuperTimes, SuperFirst
     """"檢查是否三個超級阿禾"""
-    if all(p == "B" for p in all_p) and SuperHHH and SuperTimes == 6:
+    if all(p == "B" for p in all_p) and SuperHHH and SuperFirst:
         all_SB = True
         add = super_double(all_SB, score, add)
         return add
@@ -114,6 +129,36 @@ def three_super(all_p, score, add):
         return add
 #endregion
 
+#region 綠光阿瑋區
+def green_ram():
+    """阿瑋隨機數"""
+    global GreenRam
+    GreenRam = randint(1,100)
+
+def judge_super(all_p, game_running = True):
+      """判斷超級阿禾"""
+      global GreenRam, GreenWei, GreenTimes, GreenFirst, greenS
+      if game_running :
+            mod = now_mod()
+            if mod == "GreenWei" : 
+                  if all(x == "A" for x in all_p):
+                        GreenTimes += 1
+                  if GreenTimes <= 0 : 
+                        GreenWei = False
+                        judge_super(all_p, ModEnd = True)
+            elif mod == "Normal"  : 
+                  hhh_appear = False
+
+                  if any(x == "B" for x in all_p):
+                        hhh_appear = True
+                  if SuperRam <= 15 and hhh_appear :#超級阿禾出現的機率
+                        SuperHHH = True
+                        SuperFirst = True
+                        superS += 1
+                        SuperTimes = 6
+      else :
+            SuperHHH = False
+#endregion
 
 #region 普通函式區
 def change_rate(rate, y):
@@ -243,7 +288,6 @@ for i in range(1 ,test + 1) :
             add = three_super(all_p, score, add)
 
             result()
-            judge_super(all_p)
             #遊戲繼續
             
       #遊戲結束

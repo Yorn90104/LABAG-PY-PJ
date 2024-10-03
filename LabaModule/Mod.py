@@ -49,6 +49,7 @@ def super_double(win, canvas_Game, all_SB, score, add):
 def three_super(win, canvas_Game, all_p, score, add):
     global SuperHHH, SuperTimes, SuperFirst
     """"檢查是否三個超級阿禾"""
+    print(SuperHHH)
     if all(p == "B" for p in all_p) and SuperHHH and SuperFirst:
         print("全超級阿禾")
         all_SB = True
@@ -106,7 +107,7 @@ def Super_init(CANVA, score, times, ed):
     CANVA.itemconfig("Times", text= f"剩餘次數：{times - ed}")
     CANVA.itemconfig("mod_2", text = f"")
 
-def judge_super(win, canvas_Game, all_p, game_running = True, GreenEnd = False):
+def judge_super(win, canvas_Game, all_p, game_running = True, ModEnd = False):
     """判斷超級阿禾"""
     global SuperRate, SuperRam, SuperHHH, SuperTimes, SuperFirst
     if game_running :
@@ -116,10 +117,10 @@ def judge_super(win, canvas_Game, all_p, game_running = True, GreenEnd = False):
                 SuperTimes += 2
                 print("全阿禾，次數不消耗且+1！")
             if SuperTimes <= 0 : #超級阿禾次數用完
-                win.after(2000 , SuperFalse)
-                win.after(3500 , lambda : super_screen(win,canvas_Game))  
+                SuperHHH = False
+                win.after(3000 , lambda : super_screen(win,canvas_Game))
 
-        elif mod == "Normal" or GreenEnd: #未處於任何模式
+        elif mod == "Normal" or ModEnd: #未處於任何模式或在其他模式結尾
             hhh_appear = False
             #判斷是否有出現阿和
             if any(x == "B" for x in all_p):
@@ -132,8 +133,8 @@ def judge_super(win, canvas_Game, all_p, game_running = True, GreenEnd = False):
                 win.after(2800 , lambda : change_hhh(canvas_Game,all_p))
                 win.after(3500 , lambda : super_screen(win, canvas_Game))
     else :
-        win.after(2000 , SuperFalse)
-        win.after(3500 , lambda : super_screen(win,canvas_Game, False))
+        SuperHHH = False
+        win.after(3000 , lambda : super_screen(win,canvas_Game, False))
 
 def super_times(win,canvas_Game) :
     global SuperHHH, SuperTimes, SuperFirst
@@ -213,9 +214,9 @@ def judge_green(win, canvas_Game, all_p,  game_running = True):
                 GreenTimes += 1
                 print("全咖波，次數不消耗！")
             if GreenTimes <= 0 : #綠光次數用完
-                win.after(2000 , GreenFalse)
+                GreenWei = False
                 win.after(3000 , lambda : green_screen(win, canvas_Game))
-                judge_super(win, canvas_Game, all_p, GreenEnd = True)
+                judge_super(win, canvas_Game, all_p, ModEnd = True)
             
         elif mod == "Normal" : #未處於任何模式
             gss_all = False
@@ -230,7 +231,7 @@ def judge_green(win, canvas_Game, all_p,  game_running = True):
                 win.after(2800 , lambda : change_gss(canvas_Game,all_p))
                 win.after(3500 , lambda : green_screen(win, canvas_Game))
     else :
-        win.after(2000 , GreenFalse)
+        GreenWei = False
         win.after(3000 , lambda : green_screen(win, canvas_Game, False))
 
 def green_times(win,canvas_Game) :
@@ -241,12 +242,17 @@ def green_times(win,canvas_Game) :
         print(f"綠光阿瑋剩餘次數:{GreenTimes}次")
         win.after(3000 , lambda : canvas_Game.itemconfig("mod_1", text = f"綠光阿瑋剩餘次數:{GreenTimes}次", fill = "#00FF00"))
 
-def green_triple(add):
-    "綠光阿瑋使得分增加2倍(*3)"
-    global GreenWei, GreenFirst
-    if GreenWei and GreenFirst == False:
-        add *= 3
-    return add
+def switch_times():
+    """加分倍數"""
+    mod = now_mod()
+    if mod == "GreenWei" :#綠光阿瑋使得分增加2倍(*3)
+        t = 3
+    elif mod == "Normal" or mod == "SuperHHH" :
+        t = 1
+    print(f"加分倍數為： {t} 倍")
+    return t
+        
+    
 
 def Green_init(CANVA, score, times, ed):
     
@@ -257,3 +263,4 @@ def Green_init(CANVA, score, times, ed):
     CANVA.itemconfig("Add", text=f"")
     CANVA.itemconfig("Score", text= f"目前分數：{score}")
     CANVA.itemconfig("Times", text= f"剩餘次數：{times - ed}")
+    CANVA.itemconfig("mod_2", text = f"")
