@@ -15,9 +15,8 @@ def commit_score(name, score):
         print("名稱為空，資料未上傳！")
 
 #region 定義區
-AllScore = []
-AllSuper = []
-AllGreen = []
+AllData = {}
+
 #初始設定
 game_running = True
 
@@ -53,11 +52,9 @@ def acc_rate(original_rate):
         result_rate.append(acc)
     return result_rate
 
-normal_rate = [36, 24, 17, 12, 8, 3]
-normal_acc = acc_rate(normal_rate)
+normal_acc = acc_rate([36, 24, 17, 12, 8, 3])
 
-super_rate = [19, 5, 19, 19, 19, 19]
-super_acc = acc_rate(super_rate)
+super_acc = acc_rate([19, 5, 19, 19, 19, 19])
 
 #分數清單
 same3 = [200 , 600 , 1600 , 1800 , 10000 , 20000]
@@ -355,25 +352,17 @@ for i in range(1 ,test + 1) :
       judge_super(all_p, game_running)
       judge_green(all_p, game_running)
       
-      AllScore.append(score)
-      AllSuper.append(superS)
-      AllGreen.append(greenS)
+      AllData[i] = [score, superS, greenS]
 
       print(f"第{i : {LOG}}次 分數：{score : 8} ({superS : 2} 次 超級阿禾 )({greenS : 2} 次 綠光阿瑋 )")
       
-MIN = min(AllScore) 
-min_Idx = int(AllScore.index(MIN) + 1)
-min_super = AllSuper[AllScore.index(MIN)]
-min_green = AllGreen[AllScore.index(MIN)]
+min_Idx = min(AllData, key = AllData.get)
 
-MAX = max(AllScore) 
-max_Idx = int(AllScore.index(MAX) + 1)
-max_super = AllSuper[AllScore.index(MAX)]
-max_green = AllGreen[AllScore.index(MAX)]
+max_Idx = max(AllData, key = AllData.get)
 
-print (f"最低分數為第{min_Idx: {LOG}}次： {MIN} ({min_super : 2} 次超級阿禾 )({min_green : 2} 次綠光阿瑋 )")  
-print (f"最高分數為第{max_Idx: {LOG}}次： {MAX} ({max_super : 2} 次超級阿禾 )({max_green : 2} 次綠光阿瑋 )")  
 
-commit_score("模擬測試最高分", MAX)
+print (f"最低分數為第{min_Idx: {LOG}}次： {AllData[min_Idx][0]} ({AllData[min_Idx][1] : 2} 次超級阿禾 )({AllData[min_Idx][2] : 2} 次綠光阿瑋 )")  
+print (f"最高分數為第{max_Idx: {LOG}}次： {AllData[max_Idx][0]} ({AllData[max_Idx][1] : 2} 次超級阿禾 )({AllData[max_Idx][2] : 2} 次綠光阿瑋 )")  
+commit_score("模擬測試最高分", AllData[max_Idx][0])
 
 
