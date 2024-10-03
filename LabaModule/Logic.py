@@ -5,7 +5,7 @@ from LabaModule.Var import (Name,
                         normal_acc,
                         score, history_score, add,all_score,
                         ed, times,
-                        same1, same2, same3, picture
+                        same1, same2, same3, picture,
                         )
 from LabaModule.UI import  init , update_pic, result_txt 
 from LabaModule.Sound import Ding , bgm_on_off
@@ -177,6 +177,7 @@ def game_start(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_E
       ram1, ram2, ram3 = 0 , 0 , 0
       p1, p2, p3 = '', '', ''
       score, add, ed = 0 , 0 , 0
+      
 
       init(canvas_Game, score, times , ed)
       bgm_on_off(button_music)

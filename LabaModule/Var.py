@@ -7,7 +7,7 @@ GetData = []
 data_dict = {}
 
 # 遊戲邏輯變數
-times = 15 #可遊玩次數 正常30
+times = 30 #可遊玩次數 正常30
 ed = 0
 score, add= 0, 0
 all_score = [0]
@@ -27,7 +27,7 @@ def acc_rate(original_rate):
         result_rate.append(acc)
     return result_rate
 
-normal_rate = [60, 40, 17, 12, 8, 3]
+normal_rate = [36, 24, 17, 12, 8, 3]
 normal_acc = acc_rate(normal_rate)
 
 super_rate = [19, 5, 19, 19, 19, 19]
@@ -68,7 +68,7 @@ picture = [gss , hhh , hentai , handsun , kachu , rrr]
 bgm_playing = False
 
 #region 超級阿禾區
-SuperRate = 50 #正常 15
+SuperRate = 15 #正常 15
 
 SuperHHH = False
 SuperFirst = False
@@ -88,12 +88,13 @@ super_hhh = poccess_image('.\\Asset\\super_hhh.jpg' , 150 , 200)
 #endregion
 
 #region 綠光阿瑋區
-GreenRate = 100 #正常 35
+GreenRate = 35 #正常 35
 
 GreenWei = False
 GreenFirst = False
 GreenRam = 0
 GreenTimes = 0
+gss_times = 0 #咖波累積數
 
 GreenBG = poccess_image('.\\Asset\\GreenBG.png' , 450 , 800)
 GreenTitle = poccess_image('.\\Asset\\GreenTitle.png' , 450 , 253)

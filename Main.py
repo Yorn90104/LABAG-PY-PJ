@@ -19,10 +19,10 @@ win.geometry("450x800")
 win.resizable(False, False)
 
 
-from LabaModule.UI import setup_frame ,  load_pic , Text, img_button ,txt_button, input_box, get_input, reset_input_box
+from LabaModule.UI import setup_frame , load_pic , Text, img_button ,txt_button, input_box, get_input, reset_input_box
 from LabaModule.Var import (Name,
-                            score, history_score,all_p,
-                            times, ed,
+                            score, history_score,
+                            times, ed, gss_times,
                             BG, Title, QST,back, BeginPIC, AgainPIC, SB, SuperCircle,
                             )
 from LabaModule.Logic import Begin, game_start
@@ -160,6 +160,17 @@ text_mod2 = Text(
                 "white",
                 "mod_2",
                 )
+
+text_gss = Text(
+                canvas_Game ,
+                445 , 50 ,
+                f"咖波累積數：{gss_times}" ,
+                14 ,
+                "#00FF00",
+                "gss",
+                "e"
+                )
+
 #endregion
 
 def back_home():

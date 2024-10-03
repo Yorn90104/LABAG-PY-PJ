@@ -4,9 +4,20 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 from random import randint #隨機數字
 
+import subprocess
+def commit_score(name, score):
+    """上傳資料至試算表"""
+    if name != "" :
+        url = f"https://docs.google.com/forms/d/18dVGtPExBUc0p1VbsmMxCyujQoldI6GKQWZQGJQ-yzY/formResponse?entry.582969025={name}&entry.995493130={score}"
+        subprocess.Popen(['curl', url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        print("資料已上傳")
+    else:
+        print("名稱為空，資料未上傳！")
+
 #region 定義區
 AllScore = []
 AllSuper = []
+AllGreen = []
 #初始設定
 game_running = True
 
@@ -30,6 +41,7 @@ superS = 0
 GreenTimes = 0
 GreenWei = False
 GreenFirst = False
+gss_times = 0
 greenS = 0
 
 #機率
@@ -81,26 +93,28 @@ def super_ram(SuperRam):
 def judge_super(all_p, game_running = True, ModEnd = False):
       """判斷超級阿禾"""
       global SuperRam, SuperHHH, SuperTimes, SuperFirst, superS
-      if game_running :#遊戲進行
-            mod = now_mod()
-            if mod == "SuperHHH" : #正處於超級阿禾狀態
-                  if all(x == "B" for x in all_p):
-                        SuperTimes += 2
-                  if SuperTimes <= 0 : #超級阿禾次數用完
-                        SuperHHH = False
-                        judge_super(all_p, ModEnd = True)
-            elif mod == "Normal" or ModEnd : #未處於超級阿禾狀態
-                  hhh_appear = False
-                  #判斷是否有出現阿和
-                  if any(x == "B" for x in all_p):
-                        hhh_appear = True
-                  if SuperRam <= 15 and hhh_appear :#超級阿禾出現的機率
-                        SuperHHH = True
-                        SuperFirst = True
-                        superS += 1
-                        SuperTimes = 6
-      else :
+      if not game_running :
             SuperHHH = False
+            return
+      
+      mod = now_mod()
+      if mod == "SuperHHH" : #正處於超級阿禾狀態
+            if all(x == "B" for x in all_p):
+                  SuperTimes += 2
+            if SuperTimes <= 0 : #超級阿禾次數用完
+                  SuperHHH = False
+                  judge_super(all_p, ModEnd = True)
+      elif mod == "Normal" or ModEnd : #未處於超級阿禾狀態
+            hhh_appear = False
+            #判斷是否有出現阿和
+            if any(x == "B" for x in all_p):
+                  hhh_appear = True
+            if SuperRam <= 15 and hhh_appear :#超級阿禾出現的機率
+                  SuperHHH = True
+                  SuperFirst = True
+                  superS += 1
+                  SuperTimes = 6
+      
 
 
 def switch_rate(normal_acc):
@@ -108,7 +122,7 @@ def switch_rate(normal_acc):
     mod = now_mod()
     if mod == "SuperHHH" :
         return super_acc
-    elif mod == "Normal" :
+    elif mod == "Normal" or mod == "GreenWei" :
         return normal_acc
     
 def super_double(all_SB, score, add):
@@ -130,34 +144,68 @@ def three_super(all_p, score, add):
 #endregion
 
 #region 綠光阿瑋區
-def green_ram():
+def green_times(Times) :
+      global GreenWei, GreenFirst
+      if GreenWei :
+            GreenFirst = False
+            Times -= 1
+      return Times
+
+def green_ram(GreenRam):
     """阿瑋隨機數"""
-    global GreenRam
     GreenRam = randint(1,100)
+    return GreenRam
 
-def judge_super(all_p, game_running = True):
-      """判斷超級阿禾"""
-      global GreenRam, GreenWei, GreenTimes, GreenFirst, greenS
-      if game_running :
-            mod = now_mod()
-            if mod == "GreenWei" : 
-                  if all(x == "A" for x in all_p):
-                        GreenTimes += 1
-                  if GreenTimes <= 0 : 
-                        GreenWei = False
-                        judge_super(all_p, ModEnd = True)
-            elif mod == "Normal"  : 
-                  hhh_appear = False
+def gss_acc_times(all_p):
+    """增加咖波累積數"""
+    global gss_times
+    if any(p == "A" for p in all_p) :
+        for i in range(0,len(all_p)):
+            if all_p[i] == "A" and gss_times < 20 :
+                gss_times += 1
 
-                  if any(x == "B" for x in all_p):
-                        hhh_appear = True
-                  if SuperRam <= 15 and hhh_appear :#超級阿禾出現的機率
-                        SuperHHH = True
-                        SuperFirst = True
-                        superS += 1
-                        SuperTimes = 6
-      else :
-            SuperHHH = False
+def judge_green(all_p, game_running = True):
+      """判斷綠光阿瑋"""
+      global GreenRam, GreenWei, GreenTimes, GreenFirst, gss_times, greenS
+      if not game_running :
+            GreenWei = False
+            gss_times = 0
+            return
+      
+      mod = now_mod()
+      gss_acc_times(all_p)
+      if mod == "GreenWei" : 
+            if all(x == "A" for x in all_p):
+                  GreenTimes += 1
+            if GreenTimes <= 0 : 
+                  GreenWei = False
+                  judge_super(all_p, ModEnd = True)
+      elif mod == "Normal"  : 
+            gss_all = False
+
+            if all(x == "A" for x in all_p):
+                  gss_all = True
+            if GreenRam <= 35 and gss_all :#超級阿禾出現的機率
+                  GreenWei = True
+                  GreenFirst = True
+                  greenS += 1
+                  GreenTimes = 2
+
+            elif gss_times >= 20 : #咖波累積數達到20
+                  GreenWei = True
+                  GreenFirst = True
+                  greenS += 1
+                  GreenTimes = 2
+                  gss_times = 0
+      
+def switch_times():
+    """加分倍數"""
+    mod = now_mod()
+    if mod == "GreenWei" :#綠光阿瑋使得分增加2倍(*3)
+        t = 3
+    elif mod == "Normal" or mod == "SuperHHH" :
+        t = 1
+    return t
 #endregion
 
 #region 普通函式區
@@ -255,6 +303,7 @@ for i in range(1 ,test + 1) :
 
       ram1 , ram2 , ram3 = 0 , 0 , 0
       SuperRam = 0
+      GreenRam = 0
 
       p1 , p2 , p3 = '' , '' , ''
       all_p = []
@@ -268,11 +317,19 @@ for i in range(1 ,test + 1) :
       SuperHHH = False
       superS = 0
 
+      GreenTimes = 0
+      GreenWei = False
+      gss_times = 0
+      greenS = 0
+
       while ed < times :
             SuperTimes = super_times(SuperTimes)
+            GreenTimes = green_times(GreenTimes)
+
             #隨機數
             ram1 , ram2 , ram3 = randint(1,100) , randint(1,100) , randint(1,100)
             SuperRam = super_ram(SuperRam)
+            GreenRam = green_ram(GreenRam)
 
             #歸屬
             use_rate = switch_rate(normal_acc)
@@ -284,8 +341,11 @@ for i in range(1 ,test + 1) :
             judge_super(all_p)
 
             #增加分數
+            use_times = switch_times()
+            judge_green(all_p)
             add = calculate_score(p1 , p2 , p3 , add)
             add = three_super(all_p, score, add)
+            add *= use_times
 
             result()
             #遊戲繼續
@@ -293,21 +353,27 @@ for i in range(1 ,test + 1) :
       #遊戲結束
       game_running = False
       judge_super(all_p, game_running)
+      judge_green(all_p, game_running)
       
       AllScore.append(score)
       AllSuper.append(superS)
+      AllGreen.append(greenS)
 
-      print(f"第{i : {LOG}}次 分數：{score : 8} ({superS : 2} 次 超級阿禾 )")
+      print(f"第{i : {LOG}}次 分數：{score : 8} ({superS : 2} 次 超級阿禾 )({greenS : 2} 次 綠光阿瑋 )")
       
 MIN = min(AllScore) 
 min_Idx = int(AllScore.index(MIN) + 1)
 min_super = AllSuper[AllScore.index(MIN)]
+min_green = AllGreen[AllScore.index(MIN)]
 
 MAX = max(AllScore) 
 max_Idx = int(AllScore.index(MAX) + 1)
 max_super = AllSuper[AllScore.index(MAX)]
+max_green = AllGreen[AllScore.index(MAX)]
 
-print (f"最低分數為第{min_Idx: {LOG}}次： {MIN} ({min_super : 2} 次超級阿禾 )")  
-print (f"最高分數為第{max_Idx: {LOG}}次： {MAX} ({max_super : 2} 次超級阿禾 )")  
+print (f"最低分數為第{min_Idx: {LOG}}次： {MIN} ({min_super : 2} 次超級阿禾 )({min_green : 2} 次綠光阿瑋 )")  
+print (f"最高分數為第{max_Idx: {LOG}}次： {MAX} ({max_super : 2} 次超級阿禾 )({max_green : 2} 次綠光阿瑋 )")  
+
+commit_score("模擬測試最高分", MAX)
 
 
