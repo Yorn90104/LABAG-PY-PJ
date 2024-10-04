@@ -28,6 +28,7 @@ from LabaModule.Var import (Name,
 from LabaModule.Logic import Begin, game_start
 from LabaModule.sheet import get_data
 from LabaModule.Mod import SuperFalse, GreenFalse
+from LabaModule.Sound import bgm_on_off
 get_data()
 
 #建立 HOME & GAME & END 畫面
@@ -41,6 +42,24 @@ def reset_game():
         canvas_Game.itemconfig("BG", image = BG)
         canvas_Game.itemconfig("Title", image = Title)
         canvas_Game.itemconfig("mod_1", text = "")
+
+button_music = txt_button(
+                        win,
+                        lambda : bgm_on_off(button_music),
+                        canvas_Game,
+                        "關",
+                        33, 33,
+                        415, 765,
+                        14,
+                        "black",
+                        "#C0C0C0",
+                        "button_music"
+                        )
+def press_m(event):
+    if event.char == 'm':
+        print("M 鍵被按下")
+        bgm_on_off(button_music)
+win.bind('<Key>', press_m) #綁定M鍵
 
 #region HOME畫面
 def into_game(win):
@@ -68,23 +87,23 @@ text_fanyu = Text(
                 "fanyu"
                 )
 
-pic_into = load_pic(canvas_Home, SuperCircle, 25, 130, "into")
-canvas_Home.tag_bind("into", "<Button-1>", lambda event: into_game(win))
+pic_SuperCircle = load_pic(canvas_Home, SuperCircle, 50, 130, "SuperCircle")
+canvas_Home.tag_bind("SuperCircle", "<Button-1>", lambda event :into_game(win))
 
 win.bind('<Return>', lambda event :into_game(win))
 text_click = Text(
                 canvas_Home,
-                225, 550,
+                225, 500,
                 "點擊上方圖片(或 ENTER )\n       進入遊戲 >>>>>",
                 15,
                 "#FFFFAA",
                 "click" 
                 )
 
-input_name = input_box(win, canvas_Home, "", 225, 600, 18, 15)
+input_name = input_box(win, canvas_Home, "", 225, 550, 18, 15)
 text_hint = Text(
                 canvas_Home,
-                225, 625,
+                225, 575,
                 "輸入你的稱呼",
                 12,
                 "white",
@@ -195,24 +214,6 @@ button_back = img_button(
                         18, 18
                         )
 
-button_music = txt_button(
-                        win,
-                        lambda : bgm_on_off(button_music),
-                        canvas_Game,
-                        "關",
-                        33, 33,
-                        415, 765,
-                        14,
-                        "black",
-                        "#C0C0C0",
-                        "button_music"
-                        )
-def press_m(event):
-    if event.char == 'm':
-        print("M 鍵被按下")
-        bgm_on_off(button_music)
-win.bind('<Key>', press_m) #綁定M鍵
-
 button_begin = img_button(
                         win ,
                         lambda :Begin(win, canvas_Game, button_begin, frame_Game, frame_End, canvas_End, button_music) ,
@@ -270,6 +271,6 @@ pic_SB = load_pic(canvas_End , SB, 0, 500, "SB")
 
 frame_Home.pack(fill='both', expand=True)
 
-from LabaModule.Sound import bgm_on_off
+
 
 win.mainloop()

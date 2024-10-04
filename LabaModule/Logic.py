@@ -44,6 +44,7 @@ def result(canvas_Game):
       result_txt(canvas_Game , score , add , ed , times)
       add = 0
 
+#region 遊戲內部計算
 def change_rate(rate, y):
       """根據隨機數和機率找歸屬 (隨機數)"""
       if y <= rate[0] :
@@ -142,7 +143,7 @@ def calculate_score(p1 , p2 , p3 , a):
 
             a = round( a / 3 )
       return a
-
+#endregion
 def button_unable(win , button) :
       win.unbind('<space>')  # 取消space鍵的綁定
       button.config(state='disabled')  # 停用按鈕
@@ -249,6 +250,7 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
 
             ed = judge_kachu(win, canvas_Game, all_p, times, ed)
             
+            # ed 要等第3秒才會增加，所以這裡要 +1 來判斷
             if ed + 1 >= times:
                 # 判斷遊戲結束
                 # 停用按鈕和鍵盤事件

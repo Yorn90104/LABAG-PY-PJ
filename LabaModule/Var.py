@@ -75,7 +75,7 @@ SuperFirst = False
 SuperRam = 0
 SuperTimes = 0
 
-SuperCircle = poccess_image('.\\Asset\\SuperCircle.png' , 400 , 400)
+SuperCircle = poccess_image('.\\Asset\\SuperCircle.png' , 350 , 350)
 
 SuperBG = poccess_image('.\\Asset\\SuperBG.png' , 450 , 800)
 SuperTitle = poccess_image('.\\Asset\\SuperTitle.png' , 450 , 253)
