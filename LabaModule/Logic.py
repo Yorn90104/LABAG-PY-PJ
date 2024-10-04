@@ -17,7 +17,9 @@ from LabaModule.Mod import (now_mod,
                         judge_super,three_super, switch_rate,
 
                         green_ram, green_times, Green_init,
-                        judge_green, switch_times
+                        judge_green, switch_times,
+
+                        Kachu_init, judge_kachu
                         )
 
 # 主要邏輯流程：
@@ -31,13 +33,14 @@ from LabaModule.Mod import (now_mod,
 
 def result(canvas_Game):
       """計算和顯示結果"""
-      global score, add, ed, all_p
+      global score, add, times, ed, all_p
       ed += 1
       score += add
-      print(f"\n第{ed}次")
+      print(f"")
       print(f' | {all_p[0]} | {all_p[1]} | {all_p[2]} |')
       print(f"+{add}")
       print(f"目前分數：{score}")
+      print(f"剩餘次數：{times - ed}")
       result_txt(canvas_Game , score , add , ed , times)
       add = 0
 
@@ -207,6 +210,8 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
            Super_init(canvas_Game, score, times , ed)
       elif mod == "GreenWei":
            Green_init(canvas_Game, score, times , ed)
+      elif mod == "PiKaChu":
+           Kachu_init(canvas_Game, score, times , ed)
 
       if ed  < times :
 
@@ -242,6 +247,8 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             
             win.after(3000 , lambda : result(canvas_Game))
 
+            ed = judge_kachu(win, canvas_Game, all_p, times, ed)
+            
             if ed + 1 >= times:
                 # 判斷遊戲結束
                 # 停用按鈕和鍵盤事件
@@ -253,6 +260,7 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
                 #若在特殊模式則還原
                 judge_super(win, canvas_Game, all_p, False)
                 judge_green(win, canvas_Game, all_p, False)
+                judge_kachu(win, canvas_Game, all_p, times, ed, False)
 
                 
             else:

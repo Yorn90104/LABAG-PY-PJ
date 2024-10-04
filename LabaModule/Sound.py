@@ -30,6 +30,8 @@ def bgm_on_off(button_music, game_running = True) :
         file = '.\\Asset\\SuperMusic.mp3'
     elif mod == "GreenWei":
         file = '.\\Asset\\GreenMusic.mp3'
+    elif mod == "PiKaChu":
+        file = '.\\Asset\\KachuMusic.mp3'
     
     #關
     if bgm_playing or game_running == False :

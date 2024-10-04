@@ -108,3 +108,16 @@ GreenRight = poccess_image('.\\Asset\\GreenRight.jpg' , 150 , 200)
 green_wei = poccess_image('.\\Asset\\green_wei.jpg' , 150 , 200)
 
 #endregion
+
+#region 皮卡丘充電區
+
+PiKaChu = False
+kachu_times = 0
+KachuBG = poccess_image('.\\Asset\\KachuBG.png' , 450 , 800)
+KachuTitle = poccess_image('.\\Asset\\KachuTitle.png' , 450 , 253)
+KachuQST = poccess_image('.\\Asset\\KachuQST.png' , 150 , 200)
+KachuPOP = poccess_image('.\\Asset\\KachuPOP.png' , 450 , 800)
+
+pikachu = poccess_image('.\\Asset\\pikachu.jpg' , 150 , 200)
+
+#endregion
