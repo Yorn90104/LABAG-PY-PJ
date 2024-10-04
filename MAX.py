@@ -43,6 +43,9 @@ GreenFirst = False
 gss_times = 0
 greenS = 0
 
+PiKaChu = False
+kachuS = 0
+
 #機率
 def acc_rate(original_rate):
     result_rate= []
@@ -63,17 +66,18 @@ same1 = [30 , 50 , 250 , 290 , 1200 , 2500]
 
 #endregion
 def now_mod(): #現在模式
-    global SuperHHH, GreenWei
+    global SuperHHH, GreenWei, PiKaChu
     mod = ""
     if SuperHHH :
         mod = "SuperHHH"
     elif GreenWei :
         mod = "GreenWei"
+    elif PiKaChu :
+        mod = "PiKaChu"
     else :
         mod = "Normal"
     
     return mod
-
 #region 超級阿禾區
 def super_times(Times) :
       global SuperHHH, SuperFirst
@@ -101,7 +105,7 @@ def judge_super(all_p, game_running = True, ModEnd = False):
             if SuperTimes <= 0 : #超級阿禾次數用完
                   SuperHHH = False
                   judge_super(all_p, ModEnd = True)
-      elif mod == "Normal" or ModEnd : #未處於超級阿禾狀態
+      elif mod == "Normal" or mod == "PiKaChu" or ModEnd : #未處於超級阿禾狀態
             hhh_appear = False
             #判斷是否有出現阿和
             if any(x == "B" for x in all_p):
@@ -111,6 +115,7 @@ def judge_super(all_p, game_running = True, ModEnd = False):
                   SuperFirst = True
                   superS += 1
                   SuperTimes = 6
+                  KachuFalse()
       
 
 
@@ -119,7 +124,7 @@ def switch_rate(normal_acc):
     mod = now_mod()
     if mod == "SuperHHH" :
         return super_acc
-    elif mod == "Normal" or mod == "GreenWei" :
+    elif mod == "Normal" or mod == "GreenWei" or mod == "PiKaChu" :
         return normal_acc
     
 def super_double(all_SB, score, add):
@@ -161,12 +166,13 @@ def gss_acc_times(all_p):
             if all_p[i] == "A" and gss_times < 20 :
                 gss_times += 1
 
-def judge_green(all_p, game_running = True):
+def judge_green(all_p, game_running = True, Kachu = False):
       """判斷綠光阿瑋"""
       global GreenRam, GreenWei, GreenTimes, GreenFirst, gss_times, greenS
       if not game_running :
             GreenWei = False
-            gss_times = 0
+            if Kachu == False:
+                  gss_times = 0
             return
       
       mod = now_mod()
@@ -177,7 +183,7 @@ def judge_green(all_p, game_running = True):
             if GreenTimes <= 0 : 
                   GreenWei = False
                   judge_super(all_p, ModEnd = True)
-      elif mod == "Normal"  : 
+      elif mod == "Normal" or mod == "PiKaChu"  : 
             gss_all = False
 
             if all(x == "A" for x in all_p):
@@ -187,6 +193,7 @@ def judge_green(all_p, game_running = True):
                   GreenFirst = True
                   greenS += 1
                   GreenTimes = 2
+                  KachuFalse()
 
             elif gss_times >= 20 : #咖波累積數達到20
                   GreenWei = True
@@ -194,15 +201,45 @@ def judge_green(all_p, game_running = True):
                   greenS += 1
                   GreenTimes = 2
                   gss_times = 0
+                  KachuFalse()
       
 def switch_times():
     """加分倍數"""
     mod = now_mod()
     if mod == "GreenWei" :#綠光阿瑋使得分增加2倍(*3)
         t = 3
-    elif mod == "Normal" or mod == "SuperHHH" :
+    elif mod == "Normal" or mod == "SuperHHH" or mod == "PiKaChu" :
         t = 1
     return t
+#endregion
+
+#region 皮卡丘充電區
+def KachuFalse():
+    """關掉皮卡丘"""
+    global PiKaChu
+    PiKaChu = False
+
+def judge_kachu(all_p, times, ed,  game_running = True):
+    """判斷皮卡丘"""
+    global PiKaChu, kachuS
+    if not game_running:
+        PiKaChu = False
+        return
+    #遊戲進行
+    if ed + 1 >= times:
+        kachu_appear = False
+        if any(p == "E" for p in all_p) :
+            kachu_appear = True
+        if kachu_appear:
+            PiKaChu = True
+            ed -= 5
+            kachuS += 1
+            #關掉其他模式
+            judge_super(all_p, False)
+            judge_green(all_p, False, True)
+            
+    return ed
+    
 #endregion
 
 #region 普通函式區
@@ -292,6 +329,7 @@ def result() :
     add = 0
 #endregion
 
+
 test = int (input("請輸入測試次數"))
 LOG = int (math.log10(test) + 2)
 
@@ -318,6 +356,9 @@ for i in range(1 ,test + 1) :
       GreenWei = False
       gss_times = 0
       greenS = 0
+
+      PiKaChu = False
+      kachuS = 0
 
       while ed < times :
             SuperTimes = super_times(SuperTimes)
@@ -346,23 +387,25 @@ for i in range(1 ,test + 1) :
 
             result()
             #遊戲繼續
+            ed = judge_kachu(all_p, times, ed)
             
       #遊戲結束
       game_running = False
       judge_super(all_p, game_running)
       judge_green(all_p, game_running)
+      judge_kachu(all_p, times, ed, game_running)
       
-      AllData[i] = [score, superS, greenS]
+      AllData[i] = [score, superS, greenS, kachuS]
 
-      print(f"第{i : {LOG}}次 分數：{score : 8} ({superS : 2} 次 超級阿禾 )({greenS : 2} 次 綠光阿瑋 )")
+      print(f"第{i : {LOG}}次 分數：{score : 8} ({superS : 2} 次 超級阿禾 )({greenS : 2} 次 綠光阿瑋 )({kachuS : 2} 次  皮卡丘充電)")
       
 min_Idx = min(AllData, key = AllData.get)
 
 max_Idx = max(AllData, key = AllData.get)
 
 
-print (f"最低分數為第{min_Idx: {LOG}}次： {AllData[min_Idx][0]} ({AllData[min_Idx][1] : 2} 次超級阿禾 )({AllData[min_Idx][2] : 2} 次綠光阿瑋 )")  
-print (f"最高分數為第{max_Idx: {LOG}}次： {AllData[max_Idx][0]} ({AllData[max_Idx][1] : 2} 次超級阿禾 )({AllData[max_Idx][2] : 2} 次綠光阿瑋 )")  
+print (f"最低分數為第{min_Idx: {LOG}}次： {AllData[min_Idx][0]} ({AllData[min_Idx][1] : 2} 次超級阿禾 )({AllData[min_Idx][2] : 2} 次綠光阿瑋 )({AllData[min_Idx][3] : 2} 次  皮卡丘充電)")  
+print (f"最高分數為第{max_Idx: {LOG}}次： {AllData[max_Idx][0]} ({AllData[max_Idx][1] : 2} 次超級阿禾 )({AllData[max_Idx][2] : 2} 次綠光阿瑋 )({AllData[max_Idx][3] : 2} 次  皮卡丘充電)")  
 commit_score("模擬測試最高分", AllData[max_Idx][0])
 
 
