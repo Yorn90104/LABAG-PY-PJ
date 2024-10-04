@@ -6,8 +6,6 @@
 # Sound.py：負責聲音效果和音樂控制的模組。
 # Mod.py：處理超級阿禾模式、綠光阿瑋模式的邏輯和特效。
 # Logic.py：負責遊戲的核心邏輯，包括圖片隨機選擇、分數計算及更新遊戲畫面。
-import sys
-sys.stdout.reconfigure(encoding='utf-8')
 
 import tkinter as tk
 

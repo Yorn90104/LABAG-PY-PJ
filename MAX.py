@@ -377,7 +377,7 @@ def game(i, LOG):
 test = int (input("請輸入測試次數"))
 LOG = int (math.log10(test) + 2)
 
-for i in range(1 ,test + 1) :
+for i in range(1, test + 1 ) :
       game(i, LOG)
       
 min_Idx = min(AllData, key = AllData.get)
