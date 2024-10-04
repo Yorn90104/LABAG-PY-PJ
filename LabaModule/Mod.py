@@ -367,8 +367,6 @@ def judge_kachu(win, canvas_Game, all_p, times, ed,  game_running = True):
             win.after(3500 , lambda : kachu_screen(win, canvas_Game))
     return ed
     
-            
-
 def Kachu_init(CANVA, score, times, ed):
     
     update_pic(CANVA , "LP" , KachuQST)
@@ -381,5 +379,6 @@ def Kachu_init(CANVA, score, times, ed):
     CANVA.itemconfig("mod_1", text = f"")
     CANVA.itemconfig("mod_2", text = f"")
 
+#endregion 
 
 
