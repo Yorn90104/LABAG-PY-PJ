@@ -195,8 +195,8 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
       global ram1, ram2, ram3, p1, p2, p3, all_p,  score, add, ed, normal_acc
 
       print(u"\n開始按鈕被點擊了！")
-      super_times(win,canvas_Game)
-      green_times(win, canvas_Game)
+      super_times(canvas_Game)
+      green_times(canvas_Game)
 
       button_unable(win , button_begin)
 
@@ -237,7 +237,7 @@ def Begin(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, b
             use_times = switch_times()
             judge_green(win, canvas_Game, all_p)
             add = calculate_score(p1 , p2 , p3 , add)
-            add = three_super(win, canvas_Game, all_p, score, add)
+            add = three_super(win, canvas_Game, all_p, score, add, use_times)
             add *= use_times            
             
             win.after(3000 , lambda : result(canvas_Game))

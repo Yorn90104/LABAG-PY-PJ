@@ -2,9 +2,9 @@
 
 # main.py：主程序，負責設定遊戲視窗，設置圖片、按鈕，及整合各模組。
 # Var.py：包含所有變量、圖片處理邏輯、機率和分數的配置。
-# UI.py：用來設置 tkinter 視窗中的 UI 元素（如按鈕、文字、圖片等）。
+# UI.py：用來設置 tkinter 視窗中的 UI 元素（如按鈕、文字、圖片等）。 
 # Sound.py：負責聲音效果和音樂控制的模組。
-# SuperHhh.py：處理超級阿禾模式的邏輯和特效。
+# Mod.py：處理超級阿禾模式、綠光阿瑋模式的邏輯和特效。
 # Logic.py：負責遊戲的核心邏輯，包括圖片隨機選擇、分數計算及更新遊戲畫面。
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
@@ -37,7 +37,7 @@ frame_End, canvas_End =setup_frame(win)
 
 def reset_game():
         SuperFalse()
-        GreenFalse()
+        GreenFalse(canvas_Game)
         canvas_Game.itemconfig("BG", image = BG)
         canvas_Game.itemconfig("Title", image = Title)
         canvas_Game.itemconfig("mod_1", text = "")
