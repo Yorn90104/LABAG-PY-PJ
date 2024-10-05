@@ -6,7 +6,7 @@ mixer.init()
 
 def Ding():
     """播放叮音效"""
-    ding = mixer.Sound('.\\Asset\\Ding.mp3')  # 加載音效文件
+    ding = mixer.Sound('.\\Asset\\Ding.wav')  # 加載音效文件
     ding.set_volume(0.3)
     ding.play()  # 播放音效
 
@@ -25,13 +25,13 @@ def bgm_on_off(button_music, game_running = True) :
     global bgm_playing
     mod = now_mod()
     if mod == "Normal":
-        file = '.\\Asset\\bgm.mp3'
+        file = '.\\Asset\\bgm.wav'
     elif mod == "SuperHHH":
-        file = '.\\Asset\\SuperMusic.mp3'
+        file = '.\\Asset\\SuperMusic.wav'
     elif mod == "GreenWei":
-        file = '.\\Asset\\GreenMusic.mp3'
+        file = '.\\Asset\\GreenMusic.wav'
     elif mod == "PiKaChu":
-        file = '.\\Asset\\KachuMusic.mp3'
+        file = '.\\Asset\\KachuMusic.wav'
     
     #關
     if bgm_playing or game_running == False :
@@ -48,7 +48,7 @@ def bgm_on_off(button_music, game_running = True) :
 
 def super_up():
     """播放阿禾升級音效"""
-    sup = mixer.Sound('.\\Asset\\SuperUP.mp3')  # 加載音效文件
+    sup = mixer.Sound('.\\Asset\\SuperUP.wav')  # 加載音效文件
     sup.set_volume(0.3)
     sup.play()  # 播放音效
 
@@ -61,7 +61,7 @@ def switch_music(file ,game_running = True) :
 
 def green_up():
     """播放阿瑋升級音效"""
-    gre = mixer.Sound('.\\Asset\\GreenUP.mp3')  # 加載音效文件
+    gre = mixer.Sound('.\\Asset\\GreenUP.wav')  # 加載音效文件
     gre.set_volume(0.3)
     gre.play()  # 播放音效
 

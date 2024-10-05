@@ -90,14 +90,14 @@ def super_screen(win,canvas_Game :tk.Canvas, game_running = True):
         canvas_Game.itemconfig("BG", image = SuperBG)
         canvas_Game.itemconfig("Title", image = SuperTitle)
         canvas_Game.itemconfig("mod_1", text = f"超級阿禾剩餘次數:{SuperTimes}次", fill = "#FF00FF")
-        switch_music('.\\Asset\\SuperMusic.mp3')
+        switch_music('.\\Asset\\SuperMusic.wav')
         
 
     else :
         canvas_Game.itemconfig("BG", image = BG)
         canvas_Game.itemconfig("Title", image = Title)
         canvas_Game.itemconfig("mod_1", text = "")
-        switch_music('.\\Asset\\bgm.mp3',game_running)
+        switch_music('.\\Asset\\bgm.wav',game_running)
 
 def Super_init(CANVA, score, times, ed):
     
@@ -219,14 +219,14 @@ def green_screen(win,canvas_Game :tk.Canvas, game_running = True):
         canvas_Game.itemconfig("BG", image = GreenBG)
         canvas_Game.itemconfig("Title", image = GreenTitle)
         canvas_Game.itemconfig("mod_1", text = f"綠光阿瑋剩餘次數:{GreenTimes}次", fill = "#00FF00")
-        switch_music('.\\Asset\\GreenMusic.mp3')
+        switch_music('.\\Asset\\GreenMusic.wav')
         
 
     else :
         canvas_Game.itemconfig("BG", image = BG)
         canvas_Game.itemconfig("Title", image = Title)
         canvas_Game.itemconfig("mod_1", text = "")
-        switch_music('.\\Asset\\bgm.mp3',game_running)
+        switch_music('.\\Asset\\bgm.wav',game_running)
 
 
 def judge_green(win, canvas_Game, all_p,  game_running = True, Kachu = False):
@@ -315,7 +315,7 @@ def KachuFalse():
 def change_kachu(canvas_Game, all_p):
     """把皮卡丘變成皮卡丘"""
     global super_hhh
-    switch_music('.\\Asset\\KachuMusic.mp3')
+    switch_music('.\\Asset\\KachuMusic.wav')
     if all_p[0] == "E":
         canvas_Game.itemconfig("LP" , image = pikachu)
     if all_p[1] == "E":
@@ -341,7 +341,7 @@ def kachu_screen(win,canvas_Game :tk.Canvas, game_running = True):
         canvas_Game.itemconfig("BG", image = BG)
         canvas_Game.itemconfig("Title", image = Title)
         canvas_Game.itemconfig("mod_1", text = "")
-        switch_music('.\\Asset\\bgm.mp3',game_running)
+        switch_music('.\\Asset\\bgm.wav',game_running)
 
 def judge_kachu(win, canvas_Game, all_p, times, ed,  game_running = True):
     """判斷皮卡丘"""
