@@ -139,7 +139,7 @@ def judge_super(win, canvas_Game, all_p, game_running = True, ModEnd = False):
             SuperTimes = 6
             win.after(2800 , lambda : change_hhh(canvas_Game,all_p))
             win.after(3500 , lambda : super_screen(win, canvas_Game))
-            KachuFalse()
+            KachuFalse(canvas_Game)
     
 def super_times(canvas_Game) :
     global SuperHHH, SuperTimes, SuperFirst
@@ -265,7 +265,7 @@ def judge_green(win, canvas_Game, all_p,  game_running = True, Kachu = False):
             win.after(3000, lambda : gss_txt(canvas_Game))
             win.after(2800 , lambda : change_gss(canvas_Game,all_p))
             win.after(3500 , lambda : green_screen(win, canvas_Game))
-            KachuFalse()
+            KachuFalse(canvas_Game)
 
         elif gss_times >= 20 : #咖波累積數達到20
             GreenWei = True
@@ -275,7 +275,7 @@ def judge_green(win, canvas_Game, all_p,  game_running = True, Kachu = False):
             win.after(3000, lambda : gss_txt(canvas_Game))
             win.after(2800 , lambda : change_gss(canvas_Game,all_p, False))
             win.after(3500 , lambda : green_screen(win, canvas_Game))
-            KachuFalse()
+            KachuFalse(canvas_Game)
 
 def green_times(canvas_Game) :
     global GreenWei, GreenTimes, GreenFirst
@@ -307,10 +307,11 @@ def Green_init(CANVA, score, times, ed):
     CANVA.itemconfig("mod_2", text = f"")
 
 #region 皮卡丘充電區(PiKaChu)
-def KachuFalse():
+def KachuFalse(canvas_Game):
     """關掉皮卡丘"""
     global PiKaChu
     PiKaChu = False
+    canvas_Game.itemconfig("mod_1", text = f"")
 
 def change_kachu(canvas_Game, all_p):
     """把皮卡丘變成皮卡丘"""
@@ -349,6 +350,7 @@ def judge_kachu(win, canvas_Game, all_p, times, ed,  game_running = True):
     if not game_running:
         PiKaChu = False
         win.after(2000 , lambda : kachu_screen(win, canvas_Game, False))
+        kachu_times =0
         return
     #遊戲進行
     if ed + 1 >= times:
@@ -358,13 +360,13 @@ def judge_kachu(win, canvas_Game, all_p, times, ed,  game_running = True):
         if kachu_appear:
             PiKaChu = True
             ed -= 5
-            kachu_times += 1
-            print(f"已觸發 {kachu_times} 次皮卡丘充電")
             #關掉其他模式
             judge_super(win, canvas_Game, all_p, False)
             judge_green(win, canvas_Game, all_p, False, True)
             win.after(2500 , lambda : change_kachu(canvas_Game,all_p))
             win.after(3500 , lambda : kachu_screen(win, canvas_Game))
+
+            win.after(3500 , lambda : kachu_time(canvas_Game))
     return ed
     
 def Kachu_init(CANVA, score, times, ed):
@@ -376,9 +378,13 @@ def Kachu_init(CANVA, score, times, ed):
     CANVA.itemconfig("Add", text=f"")
     CANVA.itemconfig("Score", text= f"目前分數：{score}")
     CANVA.itemconfig("Times", text= f"剩餘次數：{times - ed}")
-    CANVA.itemconfig("mod_1", text = f"")
     CANVA.itemconfig("mod_2", text = f"")
 
+def kachu_time(canvas_Game):
+    global kachu_times
+    kachu_times += 1
+    print(f"已觸發 {kachu_times} 次皮卡丘充電")
+    canvas_Game.itemconfig("mod_1", text = f"已觸發 {kachu_times} 次皮卡丘充電", fill = "#FFFF00")
 #endregion 
 
 
