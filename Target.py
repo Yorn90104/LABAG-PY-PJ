@@ -14,7 +14,7 @@ def commit_score(name, score):
     else:
         print("名稱為空，資料未上傳！")
 
-AllData = {}
+i_data = {}
 
 
 
@@ -370,9 +370,10 @@ def game(i, LOG):
         judge_green(all_p, game_running)
         judge_kachu(all_p, times, ed, game_running)
         
-        AllData[i] = [score, superS, greenS, kachuS]
+        
 
         print(f"第{i : {LOG}}次 分數：{score : 8} ({superS : 2} 次 超級阿禾 )({greenS : 2} 次 綠光阿瑋 )({kachuS : 2} 次  皮卡丘充電)")
+        return [score, superS, greenS, kachuS]
     
 
 target = int (input("請輸入目標分數"))
@@ -386,19 +387,15 @@ while True :
     else:
         LOG = int (round(math.log10(i)) + 2)
 
-    game (i, LOG)
+    i_data = game (i, LOG)
 
     # 檢查任一鍵的值(列表)的第一個索引值是否達到目標
-    if any(data[0] >= target for data in AllData.values()):
+    if i_data[0] >= target:
         break  # 如果達到目標，則退出迴圈
-      
-min_Idx = min(AllData, key = AllData.get)
+    
 
-max_Idx = max(AllData, key = AllData.get)
-
-
-print (f"最低分數為第{min_Idx: {LOG}}次： {AllData[min_Idx][0]} ({AllData[min_Idx][1] : 2} 次超級阿禾 )({AllData[min_Idx][2] : 2} 次綠光阿瑋 )({AllData[min_Idx][3] : 2} 次  皮卡丘充電)")  
-print (f"最高分數為第{max_Idx: {LOG}}次： {AllData[max_Idx][0]} ({AllData[max_Idx][1] : 2} 次超級阿禾 )({AllData[max_Idx][2] : 2} 次綠光阿瑋 )({AllData[max_Idx][3] : 2} 次  皮卡丘充電)")  
-commit_score("模擬測試最高分", AllData[max_Idx][0])
+ 
+print (f"第{i: {LOG}}次達成： {i_data[0]} ({i_data[1] : 2} 次超級阿禾 )({i_data[2] : 2} 次綠光阿瑋 )({i_data[3] : 2} 次  皮卡丘充電)")  
+commit_score("模擬測試最高分", i_data[0])
 
 
