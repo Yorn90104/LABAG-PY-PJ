@@ -44,7 +44,6 @@ def reset_game():
 button_music = txt_button(
                         win,
                         lambda : bgm_on_off(button_music),
-                        canvas_Game,
                         "關",
                         33, 33,
                         415, 765,

@@ -44,7 +44,7 @@ def img_button(win , CMD , CANVA , img, x = 0, y = 0, rel = "raised", highlight 
     CANVA.create_window(x , y , window = but)
     return but
 
-def txt_button(win , CMD , CANVA, txt, w, h, x = 0, y = 0, size = 12, font_color = "black", bg_color = "white",tg = None):
+def txt_button(win , CMD , txt, w, h, x = 0, y = 0, size = 12, font_color = "black", bg_color = "white",tg = None):
     """添加按鈕(視窗,執行動作,畫面,水平位置,垂直位置,大小,文字顏色,背景顏色,標籤)"""
     but = tk.Button(
                     win ,

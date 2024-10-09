@@ -15,11 +15,13 @@ def commit_score(name, score):
         print("名稱為空，資料未上傳！")
 
 i_data = {}
+recent_max = 0
 
 
 
 def game(i, LOG):
         #region 定義區
+        global recent_max
 
         #初始設定
         game_running = True
@@ -371,8 +373,11 @@ def game(i, LOG):
         judge_kachu(all_p, times, ed, game_running)
         
         
-
-        print(f"第{i : {LOG}}次 分數：{score : 8} ({superS : 2} 次 超級阿禾 )({greenS : 2} 次 綠光阿瑋 )({kachuS : 2} 次  皮卡丘充電)")
+        if score > recent_max:
+            recent_max = score
+            if recent_max >= 950000:
+             commit_score('模擬測試最高分', recent_max)
+        print(f"第{i : {LOG}}次 分數：{score : 8} ({superS : 2} 次 超級阿禾 )({greenS : 2} 次 綠光阿瑋 )({kachuS : 2} 次  皮卡丘充電)【目前最大值：{recent_max}】")
         return [score, superS, greenS, kachuS]
     
 
@@ -389,13 +394,12 @@ while True :
 
     i_data = game (i, LOG)
 
-    # 檢查任一鍵的值(列表)的第一個索引值是否達到目標
+    # 檢查(列表)的第一個索引值是否達到目標
     if i_data[0] >= target:
         break  # 如果達到目標，則退出迴圈
     
 
  
 print (f"第{i: {LOG}}次達成： {i_data[0]} ({i_data[1] : 2} 次超級阿禾 )({i_data[2] : 2} 次綠光阿瑋 )({i_data[3] : 2} 次  皮卡丘充電)")  
-commit_score("模擬測試最高分", i_data[0])
 
 
