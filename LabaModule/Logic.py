@@ -186,8 +186,8 @@ def game_start(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_E
       init(canvas_Game, score, times , ed)
       bgm_on_off(button_music)
       #更新歷史分數
-      all_score.append(find_history_score(Name))
-      history_score = max(all_score)
+      history_score =find_history_score(Name)
+       
       canvas_Game.itemconfig("history_score", text=f"歷史最高分數：{history_score}" ) 
 
       button_able(win , canvas_Game , button_begin, frame_Game, frame_End, canvas_End, button_music)

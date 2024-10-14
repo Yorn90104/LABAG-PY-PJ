@@ -315,7 +315,6 @@ def KachuFalse(canvas_Game):
 
 def change_kachu(canvas_Game, all_p):
     """把皮卡丘變成皮卡丘"""
-    global super_hhh
     switch_music('.\\Asset\\KachuMusic.wav')
     if all_p[0] == "E":
         canvas_Game.itemconfig("LP" , image = pikachu)

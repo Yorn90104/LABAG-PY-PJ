@@ -86,8 +86,8 @@ text_fanyu = Text(
 
 pic_SuperCircle = load_pic(canvas_Home, SuperCircle, 50, 130, "SuperCircle")
 canvas_Home.tag_bind("SuperCircle", "<Button-1>", lambda event :into_game(win))
-
 win.bind('<Return>', lambda event :into_game(win))
+
 text_click = Text(
                 canvas_Home,
                 225, 500,
