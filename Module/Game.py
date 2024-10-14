@@ -19,7 +19,7 @@ class Game:
         self.name = "" #玩家名稱
 
         # 遊戲邏輯變數
-        self.times = 15 #可遊玩次數 正常30
+        self.times = 30 #可遊玩次數 正常30
         self.ed = 0 #已遊玩次數
 
         self.score = 0
@@ -37,7 +37,7 @@ class Game:
         self.same1 = [150, 220, 380, 420, 1250, 2500]
         #機率
         self.rate_dict = dict(
-                            Normal = [30, 40, 0, 0, 30, 0],
+                            Normal = [36, 24, 17, 12, 8, 3],
                             SuperHHH = [19, 5, 19, 19, 19, 19], 
                             GreenWei = [36, 24, 17, 12, 8, 3],
                             PiKaChu = [36, 24, 17, 12, 8, 3]
